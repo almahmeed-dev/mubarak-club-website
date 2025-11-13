@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Mubarak Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .neo-border {
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        .neo-button {
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0px #000;
+            transition: all 0.15s ease;
+        }
+
+        .neo-button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .neo-button:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .tab-button.active {
+            background-color: #fef08a;
+            transform: scale(1.05);
+        }
+
+        .bg-pattern {
+            background-color: #fff;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full">
+            <div class="neo-border bg-white p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-black mb-2">
+                        <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform -rotate-2">MUBARAK</span>
+                        <span class="bg-pink-500 text-white px-4 py-2 inline-block transform rotate-2">CLUB</span>
+                    </h1>
+                    <h2 class="text-2xl font-bold mt-4">Admin Panel 🔐</h2>
+                </div>
+
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block font-bold mb-2">Username</label>
+                        <input type="text" id="username" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-cyan-400" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Password</label>
+                        <input type="password" id="password" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-cyan-400" required>
+                    </div>
+                    <div id="login-error" class="hidden bg-red-400 border-4 border-black p-3 font-bold text-center">
+                        Invalid credentials!
+                    </div>
+                    <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-4 font-bold text-lg w-full">
+                        LOGIN
+                    </button>
+                </form>
+
+                <div class="mt-6 p-4 bg-yellow-100 border-4 border-black">
+                    <p class="text-sm font-bold">🔒 Default credentials:</p>
+                    <p class="text-sm font-semibold">Username: <code class="bg-white px-2 py-1 border-2 border-black">admin</code></p>
+                    <p class="text-sm font-semibold">Password: <code class="bg-white px-2 py-1 border-2 border-black">mubarak2024</code></p>
+                    <p class="text-xs font-bold text-red-600 mt-2">⚠️ Change this immediately after first login!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden">
+        <!-- Header -->
+        <nav class="bg-black text-white border-b-4 border-black sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-black">
+                        <span class="bg-yellow-300 text-black px-3 py-1">ADMIN</span>
+                        <span class="bg-pink-500 px-3 py-1">PANEL</span>
+                    </h1>
+                    <div class="flex gap-4 items-center">
+                        <span class="font-bold">👤 <span id="current-user"></span></span>
+                        <button onclick="logout()" class="neo-button bg-red-500 text-white px-6 py-2 font-bold">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto p-4">
+            <!-- Stats Overview -->
+            <div class="grid md:grid-cols-4 gap-4 mb-8 mt-8">
+                <div class="neo-border bg-pink-400 p-6">
+                    <div class="text-4xl mb-2">📝</div>
+                    <div class="text-3xl font-black" id="blog-count">0</div>
+                    <div class="font-bold">Blog Posts</div>
+                </div>
+                <div class="neo-border bg-cyan-400 p-6">
+                    <div class="text-4xl mb-2">🎥</div>
+                    <div class="text-3xl font-black" id="video-count">0</div>
+                    <div class="font-bold">Videos</div>
+                </div>
+                <div class="neo-border bg-lime-400 p-6">
+                    <div class="text-4xl mb-2">📚</div>
+                    <div class="text-3xl font-black" id="resource-count">0</div>
+                    <div class="font-bold">Resources</div>
+                </div>
+                <div class="neo-border bg-purple-400 p-6">
+                    <div class="text-4xl mb-2">👥</div>
+                    <div class="text-3xl font-black" id="subscriber-count">0</div>
+                    <div class="font-bold">Subscribers</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-2 mb-6 flex-wrap">
+                <button onclick="showTab('blogs')" class="tab-button neo-button bg-white px-6 py-3 font-bold active" data-tab="blogs">
+                    📝 Manage Blogs
+                </button>
+                <button onclick="showTab('videos')" class="tab-button neo-button bg-white px-6 py-3 font-bold" data-tab="videos">
+                    🎥 Manage Videos
+                </button>
+                <button onclick="showTab('resources')" class="tab-button neo-button bg-white px-6 py-3 font-bold" data-tab="resources">
+                    📚 Manage Resources
+                </button>
+                <button onclick="showTab('settings')" class="tab-button neo-button bg-white px-6 py-3 font-bold" data-tab="settings">
+                    ⚙️ Settings
+                </button>
+            </div>
+
+            <!-- Blogs Tab -->
+            <div id="blogs-tab" class="tab-content">
+                <div class="neo-border bg-white p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-black">Blog Posts</h2>
+                        <button onclick="openBlogModal()" class="neo-button bg-pink-500 text-white px-6 py-3 font-bold">
+                            + Add New Post
+                        </button>
+                    </div>
+                    <div id="blogs-list" class="space-y-4">
+                        <!-- Blog items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videos Tab -->
+            <div id="videos-tab" class="tab-content hidden">
+                <div class="neo-border bg-white p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-black">Video Library</h2>
+                        <button onclick="openVideoModal()" class="neo-button bg-cyan-500 text-white px-6 py-3 font-bold">
+                            + Add New Video
+                        </button>
+                    </div>
+                    <div id="videos-list" class="space-y-4">
+                        <!-- Video items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Tab -->
+            <div id="resources-tab" class="tab-content hidden">
+                <div class="neo-border bg-white p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-black">Study Resources</h2>
+                        <button onclick="openResourceModal()" class="neo-button bg-lime-500 text-white px-6 py-3 font-bold">
+                            + Add New Resource
+                        </button>
+                    </div>
+                    <div id="resources-list" class="space-y-4">
+                        <!-- Resource items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content hidden">
+                <div class="neo-border bg-white p-6 mb-6">
+                    <h2 class="text-3xl font-black mb-6">Security Settings</h2>
+                    <form id="change-password-form" class="space-y-4 max-w-md">
+                        <div>
+                            <label class="block font-bold mb-2">Current Password</label>
+                            <input type="password" id="current-password" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">New Password</label>
+                            <input type="password" id="new-password" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2">Confirm New Password</label>
+                            <input type="password" id="confirm-password" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        </div>
+                        <button type="submit" class="neo-button bg-purple-500 text-white px-8 py-3 font-bold">
+                            Change Password
+                        </button>
+                    </form>
+                </div>
+
+                <div class="neo-border bg-yellow-100 p-6">
+                    <h3 class="text-2xl font-bold mb-4">⚠️ Important Notes:</h3>
+                    <ul class="space-y-2 font-semibold">
+                        <li>✓ All changes are saved in your browser's localStorage</li>
+                        <li>✓ Data persists as long as you don't clear browser data</li>
+                        <li>✓ For production, integrate with a backend database</li>
+                        <li>✓ Export/backup your data regularly</li>
+                    </ul>
+                    <button onclick="exportData()" class="neo-button bg-cyan-400 px-6 py-3 font-bold mt-4">
+                        📥 Export All Data (JSON)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div id="blog-modal" class="modal">
+        <div class="modal-content neo-border bg-white p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-black">Add/Edit Blog Post</h2>
+                <button onclick="closeBlogModal()" class="text-4xl font-bold">&times;</button>
+            </div>
+            <form id="blog-form" class="space-y-4">
+                <input type="hidden" id="blog-id">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Title (English)</label>
+                        <input type="text" id="blog-title-en" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Title (Arabic)</label>
+                        <input type="text" id="blog-title-ar" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Excerpt (English)</label>
+                        <textarea id="blog-excerpt-en" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Excerpt (Arabic)</label>
+                        <textarea id="blog-excerpt-ar" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Category</label>
+                    <select id="blog-category" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        <option value="study-tips">Study Tips</option>
+                        <option value="bahrain">Bahrain</option>
+                        <option value="concepts">Economic Concepts</option>
+                        <option value="environment">Environment</option>
+                        <option value="career">Career Paths</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Tags (comma separated)</label>
+                    <input type="text" id="blog-tags" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="نصائح_دراسية, امتحانات">
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Date</label>
+                    <input type="date" id="blog-date" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-3 font-bold flex-1">
+                        Save Post
+                    </button>
+                    <button type="button" onclick="closeBlogModal()" class="neo-button bg-gray-400 px-8 py-3 font-bold">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content neo-border bg-white p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-black">Add/Edit Video</h2>
+                <button onclick="closeVideoModal()" class="text-4xl font-bold">&times;</button>
+            </div>
+            <form id="video-form" class="space-y-4">
+                <input type="hidden" id="video-id">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Title (English)</label>
+                        <input type="text" id="video-title-en" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Title (Arabic)</label>
+                        <input type="text" id="video-title-ar" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">YouTube Video ID</label>
+                    <input type="text" id="video-youtube-id" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="dQw4w9WgXcQ" required>
+                    <p class="text-sm font-semibold mt-1">Extract from URL: youtube.com/watch?v=<strong>VIDEO_ID</strong></p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Description (English)</label>
+                        <textarea id="video-desc-en" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Description (Arabic)</label>
+                        <textarea id="video-desc-ar" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Category</label>
+                    <select id="video-category" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        <option value="microeconomics">Microeconomics</option>
+                        <option value="macroeconomics">Macroeconomics</option>
+                        <option value="finance">Finance & Banking</option>
+                        <option value="trade">International Trade</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Tags (comma separated)</label>
+                    <input type="text" id="video-tags" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="الأساسيات, Basics">
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="neo-button bg-cyan-500 text-white px-8 py-3 font-bold flex-1">
+                        Save Video
+                    </button>
+                    <button type="button" onclick="closeVideoModal()" class="neo-button bg-gray-400 px-8 py-3 font-bold">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resource Modal -->
+    <div id="resource-modal" class="modal">
+        <div class="modal-content neo-border bg-white p-8 m-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-black">Add/Edit Resource</h2>
+                <button onclick="closeResourceModal()" class="text-4xl font-bold">&times;</button>
+            </div>
+            <form id="resource-form" class="space-y-4">
+                <input type="hidden" id="resource-id">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Title (English)</label>
+                        <input type="text" id="resource-title-en" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Title (Arabic)</label>
+                        <input type="text" id="resource-title-ar" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">Description (English)</label>
+                        <textarea id="resource-desc-en" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">Description (Arabic)</label>
+                        <textarea id="resource-desc-ar" rows="3" class="w-full px-4 py-3 border-4 border-black font-semibold" required></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Type</label>
+                    <select id="resource-type" class="w-full px-4 py-3 border-4 border-black font-semibold" required>
+                        <option value="guide">Study Guide</option>
+                        <option value="test">Practice Test</option>
+                        <option value="flashcard">Flashcards</option>
+                        <option value="glossary">Glossary</option>
+                        <option value="formula">Formulas</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2">Download Link / URL</label>
+                    <input type="url" id="resource-url" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="https://..." required>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold mb-2">File Size</label>
+                        <input type="text" id="resource-size" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="15 pages, 2 MB">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2">File Format</label>
+                        <input type="text" id="resource-format" class="w-full px-4 py-3 border-4 border-black font-semibold" placeholder="PDF">
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="neo-button bg-lime-500 text-white px-8 py-3 font-bold flex-1">
+                        Save Resource
+                    </button>
+                    <button type="button" onclick="closeResourceModal()" class="neo-button bg-gray-400 px-8 py-3 font-bold">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
