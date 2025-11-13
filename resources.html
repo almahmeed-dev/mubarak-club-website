@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموارد التعليمية - نادي مبارك</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', 'Space Grotesk', sans-serif;
+        }
+
+        [dir="ltr"] * {
+            font-family: 'Space Grotesk', 'Cairo', sans-serif;
+        }
+
+        .neo-border {
+            border: 4px solid #000;
+        }
+
+        [dir="rtl"] .neo-border {
+            box-shadow: -8px 8px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border {
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        .neo-button {
+            border: 4px solid #000;
+            transition: all 0.15s ease;
+        }
+
+        [dir="rtl"] .neo-button {
+            box-shadow: -6px 6px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button {
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        [dir="rtl"] .neo-button:hover {
+            transform: translate(-3px, 3px);
+            box-shadow: -3px 3px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            z-index: 100;
+        }
+
+        [dir="rtl"] .lang-switcher {
+            left: 20px;
+        }
+
+        [dir="ltr"] .lang-switcher {
+            right: 20px;
+        }
+
+        .lang-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lang-option.active {
+            transform: scale(1.1);
+        }
+
+        .lang-option:not(.active) {
+            opacity: 0.6;
+        }
+
+        .lang-hidden {
+            display: none !important;
+        }
+
+        .bg-pattern {
+            background-color: #fff;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
+        }
+
+        .resource-card {
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+        }
+    </style>
+</head>
+<body class="bg-pattern overflow-x-hidden">
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <div class="neo-border bg-white p-2 flex gap-2">
+            <button onclick="switchLanguage('ar')" id="lang-ar" class="lang-option active bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇧🇭</span>
+                <span>عربي</span>
+            </button>
+            <button onclick="switchLanguage('en')" id="lang-en" class="lang-option bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇬🇧</span>
+                <span>EN</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-yellow-300 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0">
+                    <a href="index-bilingual.html">
+                        <h1 class="text-3xl font-bold tracking-tight">
+                            <span class="lang-ar">
+                                <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform rotate-2">مبارك</span>
+                                <span class="bg-pink-500 text-white px-4 py-2 inline-block transform -rotate-2">كلوب</span>
+                            </span>
+                            <span class="lang-en lang-hidden">
+                                <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform -rotate-2">MUBARAK</span>
+                                <span class="bg-pink-500 text-white px-4 py-2 inline-block transform rotate-2">CLUB</span>
+                            </span>
+                        </h1>
+                    </a>
+                </div>
+                <div class="hidden md:flex gap-2">
+                    <div class="lang-ar flex gap-2">
+                        <a href="index-bilingual.html#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">من أنا</a>
+                        <a href="videos.html" class="neo-button bg-pink-400 px-6 py-2 font-bold">الفيديوهات</a>
+                        <a href="blog.html" class="neo-button bg-lime-400 px-6 py-2 font-bold">المدونة</a>
+                        <a href="index-bilingual.html#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">تواصل</a>
+                    </div>
+                    <div class="lang-en lang-hidden flex gap-2">
+                        <a href="index-bilingual.html#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">ABOUT</a>
+                        <a href="videos.html" class="neo-button bg-pink-400 px-6 py-2 font-bold">VIDEOS</a>
+                        <a href="blog.html" class="neo-button bg-lime-400 px-6 py-2 font-bold">BLOG</a>
+                        <a href="index-bilingual.html#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">CONTACT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="py-20 px-4 bg-purple-500 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="lang-ar">
+                <h1 class="text-5xl md:text-7xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform -rotate-2">موارد</span>
+                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform rotate-2">مجانية</span>
+                </h1>
+                <p class="text-xl font-bold text-white max-w-2xl mx-auto">
+                    <span class="bg-cyan-400 text-black px-4 py-2 border-3 border-black inline-block">
+                        أدوات لمساعدتك على التفوق في الاقتصاد 📚
+                    </span>
+                </p>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h1 class="text-5xl md:text-7xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform rotate-2">FREE</span>
+                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform -rotate-2">RESOURCES</span>
+                </h1>
+                <p class="text-xl font-bold text-white max-w-2xl mx-auto">
+                    <span class="bg-cyan-400 text-black px-4 py-2 border-3 border-black inline-block">
+                        Tools to help you excel in economics 📚
+                    </span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Study Guides -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-black mb-12 text-center">
+                <span class="lang-ar bg-cyan-300 px-6 py-3 border-4 border-black inline-block">📝 أدلة الدراسة</span>
+                <span class="lang-en lang-hidden bg-cyan-300 px-6 py-3 border-4 border-black inline-block">📝 Study Guides</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Guide 1 -->
+                <div class="resource-card neo-border bg-white">
+                    <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-6 border-b-4 border-black">
+                        <div class="text-6xl mb-4">📊</div>
+                        <h3 class="lang-ar text-2xl font-bold text-white">دليل العرض والطلب</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold text-white">Supply & Demand Guide</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">دليل شامل لفهم منحنيات العرض والطلب مع أمثلة عملية.</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">Comprehensive guide to understanding supply and demand curves with practical examples.</p>
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">PDF</span>
+                            <span class="bg-lime-300 px-3 py-1 text-sm font-bold border-2 border-black">15 صفحة</span>
+                        </div>
+                        <button class="neo-button bg-pink-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guide 2 -->
+                <div class="resource-card neo-border bg-white">
+                    <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-6 border-b-4 border-black">
+                        <div class="text-6xl mb-4">💰</div>
+                        <h3 class="lang-ar text-2xl font-bold text-white">دليل الاقتصاد الكلي</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold text-white">Macroeconomics Guide</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">كل ما تحتاجه عن الناتج المحلي، التضخم، والبطالة.</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">Everything you need about GDP, inflation, and unemployment.</p>
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">PDF</span>
+                            <span class="bg-cyan-300 px-3 py-1 text-sm font-bold border-2 border-black">25 صفحة</span>
+                        </div>
+                        <button class="neo-button bg-cyan-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guide 3 -->
+                <div class="resource-card neo-border bg-white">
+                    <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-6 border-b-4 border-black">
+                        <div class="text-6xl mb-4">🏦</div>
+                        <h3 class="lang-ar text-2xl font-bold text-white">دليل الأنظمة المصرفية</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold text-white">Banking Systems Guide</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">فهم البنوك المركزية والسياسة النقدية بشكل مبسط.</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">Understanding central banks and monetary policy made simple.</p>
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">PDF</span>
+                            <span class="bg-green-300 px-3 py-1 text-sm font-bold border-2 border-black">20 صفحة</span>
+                        </div>
+                        <button class="neo-button bg-green-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Tests -->
+    <section class="py-20 px-4 bg-yellow-100 border-t-4 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-black mb-12 text-center">
+                <span class="lang-ar bg-pink-300 px-6 py-3 border-4 border-black inline-block">✅ اختبارات تدريبية</span>
+                <span class="lang-en lang-hidden bg-pink-300 px-6 py-3 border-4 border-black inline-block">✅ Practice Tests</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Test 1 -->
+                <div class="resource-card neo-border bg-white">
+                    <div class="bg-gradient-to-r from-red-500 to-pink-600 p-6 border-b-4 border-black">
+                        <h3 class="lang-ar text-2xl font-bold text-white">اختبار الاقتصاد الجزئي</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold text-white">Microeconomics Test</h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="lang-ar space-y-2 mb-6 font-semibold">
+                            <li>✓ 50 سؤال متنوع</li>
+                            <li>✓ أسئلة اختيار من متعدد</li>
+                            <li>✓ إجابات نموذجية مفصلة</li>
+                            <li>✓ يغطي جميع المواضيع الرئيسية</li>
+                        </ul>
+                        <ul class="lang-en lang-hidden space-y-2 mb-6 font-semibold">
+                            <li>✓ 50 diverse questions</li>
+                            <li>✓ Multiple choice format</li>
+                            <li>✓ Detailed model answers</li>
+                            <li>✓ Covers all major topics</li>
+                        </ul>
+                        <button class="neo-button bg-red-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل الاختبار 📥</span>
+                            <span class="lang-en lang-hidden">Download Test 📥</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Test 2 -->
+                <div class="resource-card neo-border bg-white">
+                    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 border-b-4 border-black">
+                        <h3 class="lang-ar text-2xl font-bold text-white">اختبار الاقتصاد الكلي</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold text-white">Macroeconomics Test</h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="lang-ar space-y-2 mb-6 font-semibold">
+                            <li>✓ 50 سؤال متنوع</li>
+                            <li>✓ أسئلة اختيار من متعدد</li>
+                            <li>✓ إجابات نموذجية مفصلة</li>
+                            <li>✓ يغطي جميع المواضيع الرئيسية</li>
+                        </ul>
+                        <ul class="lang-en lang-hidden space-y-2 mb-6 font-semibold">
+                            <li>✓ 50 diverse questions</li>
+                            <li>✓ Multiple choice format</li>
+                            <li>✓ Detailed model answers</li>
+                            <li>✓ Covers all major topics</li>
+                        </ul>
+                        <button class="neo-button bg-blue-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل الاختبار 📥</span>
+                            <span class="lang-en lang-hidden">Download Test 📥</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flashcards & Glossary -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-black mb-12 text-center">
+                <span class="lang-ar bg-lime-300 px-6 py-3 border-4 border-black inline-block">📖 مسرد المصطلحات</span>
+                <span class="lang-en lang-hidden bg-lime-300 px-6 py-3 border-4 border-black inline-block">📖 Glossary & Flashcards</span>
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Resource 1 -->
+                <div class="resource-card neo-border bg-white text-center">
+                    <div class="bg-yellow-400 p-8 border-b-4 border-black">
+                        <div class="text-7xl mb-4">📇</div>
+                        <h3 class="lang-ar text-xl font-bold">بطاقات تعليمية</h3>
+                        <h3 class="lang-en lang-hidden text-xl font-bold">Flashcards Set</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">200+ بطاقة للمصطلحات الرئيسية</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">200+ cards for key terms</p>
+                        <button class="neo-button bg-yellow-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resource 2 -->
+                <div class="resource-card neo-border bg-white text-center">
+                    <div class="bg-purple-400 p-8 border-b-4 border-black">
+                        <div class="text-7xl mb-4">📚</div>
+                        <h3 class="lang-ar text-xl font-bold">قاموس شامل</h3>
+                        <h3 class="lang-en lang-hidden text-xl font-bold">Complete Dictionary</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">500+ مصطلح مع تعريفات واضحة</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">500+ terms with clear definitions</p>
+                        <button class="neo-button bg-purple-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resource 3 -->
+                <div class="resource-card neo-border bg-white text-center">
+                    <div class="bg-orange-400 p-8 border-b-4 border-black">
+                        <div class="text-7xl mb-4">🧮</div>
+                        <h3 class="lang-ar text-xl font-bold">صيغ ومعادلات</h3>
+                        <h3 class="lang-en lang-hidden text-xl font-bold">Formulas & Equations</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="lang-ar font-semibold mb-4">جميع المعادلات الأساسية</p>
+                        <p class="lang-en lang-hidden font-semibold mb-4">All essential formulas</p>
+                        <button class="neo-button bg-orange-400 px-6 py-3 font-bold w-full">
+                            <span class="lang-ar">تحميل 📥</span>
+                            <span class="lang-en lang-hidden">Download 📥</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 px-4 bg-gradient-to-r from-pink-500 to-purple-600 border-t-4 border-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="text-8xl mb-6">🎓</div>
+            <div class="lang-ar">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block">هل تحتاج المزيد؟</span>
+                </h2>
+                <p class="text-xl font-bold text-white mb-8">تواصل معي للحصول على موارد إضافية أو طلبات خاصة!</p>
+                <a href="index-bilingual.html#contact" class="neo-button bg-yellow-300 px-12 py-5 text-xl font-bold inline-block">
+                    تواصل الآن 📧
+                </a>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block">Need More?</span>
+                </h2>
+                <p class="text-xl font-bold text-white mb-8">Contact me for additional resources or special requests!</p>
+                <a href="index-bilingual.html#contact" class="neo-button bg-yellow-300 px-12 py-5 text-xl font-bold inline-block">
+                    Contact Now 📧
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-4 border-t-4 border-black">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="lang-ar">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform rotate-2">نادي</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform -rotate-2">مبارك</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">جعل تعليم الاقتصاد متاحًا وجذابًا وممتعًا للطلاب في البحرين وخارجها.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">صُنع بـ ❤️ لطلاب الاقتصاد</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© ٢٠٢٤ نادي مبارك. جميع الحقوق محفوظة.</p>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform -rotate-2">MUBARAK</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform rotate-2">CLUB</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">Making economics education accessible, engaging, and fun for students in Bahrain and beyond.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">Made with ❤️ for Economics Students</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© 2024 Mubarak Club. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switcher
+        let currentLang = 'ar';
+
+        function switchLanguage(lang) {
+            if (currentLang === lang) return;
+            currentLang = lang;
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            const arElements = document.querySelectorAll('.lang-ar');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (lang === 'ar') {
+                arElements.forEach(el => el.classList.remove('lang-hidden'));
+                enElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-ar').classList.add('active');
+                document.getElementById('lang-en').classList.remove('active');
+            } else {
+                enElements.forEach(el => el.classList.remove('lang-hidden'));
+                arElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-en').classList.add('active');
+                document.getElementById('lang-ar').classList.remove('active');
+            }
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        const savedLang = localStorage.getItem('preferred-language');
+        if (savedLang && savedLang !== 'ar') {
+            switchLanguage(savedLang);
+        }
+    </script>
+</body>
+</html>

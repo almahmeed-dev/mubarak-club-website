@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة - نادي مبارك</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', 'Space Grotesk', sans-serif;
+        }
+
+        [dir="ltr"] * {
+            font-family: 'Space Grotesk', 'Cairo', sans-serif;
+        }
+
+        .neo-border {
+            border: 4px solid #000;
+        }
+
+        [dir="rtl"] .neo-border {
+            box-shadow: -8px 8px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border {
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        .neo-border-thick {
+            border: 5px solid #000;
+        }
+
+        [dir="rtl"] .neo-border-thick {
+            box-shadow: -12px 12px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border-thick {
+            box-shadow: 12px 12px 0px #000;
+        }
+
+        .neo-button {
+            border: 4px solid #000;
+            transition: all 0.15s ease;
+        }
+
+        [dir="rtl"] .neo-button {
+            box-shadow: -6px 6px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button {
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        [dir="rtl"] .neo-button:hover {
+            transform: translate(-3px, 3px);
+            box-shadow: -3px 3px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            z-index: 100;
+        }
+
+        [dir="rtl"] .lang-switcher {
+            left: 20px;
+        }
+
+        [dir="ltr"] .lang-switcher {
+            right: 20px;
+        }
+
+        .lang-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lang-option.active {
+            transform: scale(1.1);
+        }
+
+        .lang-option:not(.active) {
+            opacity: 0.6;
+        }
+
+        .lang-hidden {
+            display: none !important;
+        }
+
+        .bg-pattern {
+            background-color: #fff;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
+        }
+
+        .filter-button.active {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .filter-button:not(.active) {
+            opacity: 0.7;
+        }
+
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+        }
+    </style>
+</head>
+<body class="bg-pattern overflow-x-hidden">
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <div class="neo-border bg-white p-2 flex gap-2">
+            <button onclick="switchLanguage('ar')" id="lang-ar" class="lang-option active bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇧🇭</span>
+                <span>عربي</span>
+            </button>
+            <button onclick="switchLanguage('en')" id="lang-en" class="lang-option bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇬🇧</span>
+                <span>EN</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-yellow-300 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0">
+                    <a href="index-bilingual.html">
+                        <h1 class="text-3xl font-bold tracking-tight">
+                            <span class="lang-ar">
+                                <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform rotate-2">مبارك</span>
+                                <span class="bg-pink-500 text-white px-4 py-2 inline-block transform -rotate-2">كلوب</span>
+                            </span>
+                            <span class="lang-en lang-hidden">
+                                <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform -rotate-2">MUBARAK</span>
+                                <span class="bg-pink-500 text-white px-4 py-2 inline-block transform rotate-2">CLUB</span>
+                            </span>
+                        </h1>
+                    </a>
+                </div>
+                <div class="hidden md:flex gap-2">
+                    <div class="lang-ar flex gap-2">
+                        <a href="index-bilingual.html#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">من أنا</a>
+                        <a href="videos.html" class="neo-button bg-pink-400 px-6 py-2 font-bold">الفيديوهات</a>
+                        <a href="blog.html" class="neo-button bg-lime-400 px-6 py-2 font-bold">المدونة</a>
+                        <a href="index-bilingual.html#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">تواصل</a>
+                    </div>
+                    <div class="lang-en lang-hidden flex gap-2">
+                        <a href="index-bilingual.html#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">ABOUT</a>
+                        <a href="videos.html" class="neo-button bg-pink-400 px-6 py-2 font-bold">VIDEOS</a>
+                        <a href="blog.html" class="neo-button bg-lime-400 px-6 py-2 font-bold">BLOG</a>
+                        <a href="index-bilingual.html#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">CONTACT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="py-20 px-4 bg-lime-400 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="lang-ar">
+                <h1 class="text-5xl md:text-7xl font-black mb-6">
+                    <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform rotate-2">مقالات</span>
+                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform -rotate-2">المدونة</span>
+                </h1>
+                <p class="text-xl font-semibold max-w-2xl mx-auto">
+                    <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
+                        رؤى ونصائح وتحليلات اقتصادية ✍️
+                    </span>
+                </p>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h1 class="text-5xl md:text-7xl font-black mb-6">
+                    <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform -rotate-2">BLOG</span>
+                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform rotate-2">POSTS</span>
+                </h1>
+                <p class="text-xl font-semibold max-w-2xl mx-auto">
+                    <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
+                        Insights, tips, and economic analysis ✍️
+                    </span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="py-12 px-4 bg-white border-b-4 border-black">
+        <div class="max-w-7xl mx-auto">
+            <!-- Arabic Search -->
+            <div class="lang-ar">
+                <!-- Search Bar -->
+                <div class="mb-8">
+                    <input type="text" id="search-ar" placeholder="🔍 ابحث في المقالات..." class="w-full px-6 py-4 text-lg font-bold border-4 border-black neo-border focus:outline-none focus:ring-4 focus:ring-pink-400">
+                </div>
+
+                <!-- Filter Tags -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">تصفية حسب الموضوع:</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="filterPosts('all')" class="filter-button active neo-button bg-purple-500 text-white px-6 py-3 font-bold" data-category="all">
+                            الكل
+                        </button>
+                        <button onclick="filterPosts('study-tips')" class="filter-button neo-button bg-yellow-300 px-6 py-3 font-bold" data-category="study-tips">
+                            نصائح دراسية
+                        </button>
+                        <button onclick="filterPosts('bahrain')" class="filter-button neo-button bg-cyan-300 px-6 py-3 font-bold" data-category="bahrain">
+                            البحرين
+                        </button>
+                        <button onclick="filterPosts('concepts')" class="filter-button neo-button bg-pink-300 px-6 py-3 font-bold" data-category="concepts">
+                            مفاهيم اقتصادية
+                        </button>
+                        <button onclick="filterPosts('environment')" class="filter-button neo-button bg-green-300 px-6 py-3 font-bold" data-category="environment">
+                            البيئة
+                        </button>
+                        <button onclick="filterPosts('career')" class="filter-button neo-button bg-orange-300 px-6 py-3 font-bold" data-category="career">
+                            مسارات مهنية
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English Search -->
+            <div class="lang-en lang-hidden">
+                <!-- Search Bar -->
+                <div class="mb-8">
+                    <input type="text" id="search-en" placeholder="🔍 Search articles..." class="w-full px-6 py-4 text-lg font-bold border-4 border-black neo-border focus:outline-none focus:ring-4 focus:ring-pink-400">
+                </div>
+
+                <!-- Filter Tags -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Filter by Topic:</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="filterPosts('all')" class="filter-button active neo-button bg-purple-500 text-white px-6 py-3 font-bold" data-category="all">
+                            All
+                        </button>
+                        <button onclick="filterPosts('study-tips')" class="filter-button neo-button bg-yellow-300 px-6 py-3 font-bold" data-category="study-tips">
+                            Study Tips
+                        </button>
+                        <button onclick="filterPosts('bahrain')" class="filter-button neo-button bg-cyan-300 px-6 py-3 font-bold" data-category="bahrain">
+                            Bahrain
+                        </button>
+                        <button onclick="filterPosts('concepts')" class="filter-button neo-button bg-pink-300 px-6 py-3 font-bold" data-category="concepts">
+                            Economic Concepts
+                        </button>
+                        <button onclick="filterPosts('environment')" class="filter-button neo-button bg-green-300 px-6 py-3 font-bold" data-category="environment">
+                            Environment
+                        </button>
+                        <button onclick="filterPosts('career')" class="filter-button neo-button bg-orange-300 px-6 py-3 font-bold" data-category="career">
+                            Career Paths
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="study-tips">
+                    <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">📚</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٥ مايو ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 15, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">١٠ نصائح للتفوق في امتحان الاقتصاد</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">10 Tips for Acing Your Economics Exam</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">استراتيجيات مثبتة لمساعدتك على الاستعداد بفعالية وتحقيق أفضل أداء في يوم الامتحان...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">Proven strategies to help you prepare effectively and perform your best on exam day...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#نصائح_دراسية</span>
+                            <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#امتحانات</span>
+                        </div>
+                        <a href="blog-post-1.html" class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="bahrain">
+                    <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">🇧🇭</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٠ مايو ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 10, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">اقتصاد البحرين: الماضي والحاضر والمستقبل</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">Bahrain's Economy: Past, Present, and Future</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">نظرة متعمقة على التنمية الاقتصادية للبحرين وما ينتظر المملكة في المستقبل...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">An in-depth look at Bahrain's economic development and what lies ahead for the kingdom...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#البحرين</span>
+                            <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#تحليل</span>
+                        </div>
+                        <a href="blog-post-2.html" class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="concepts">
+                    <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">💡</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٥ مايو ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 5, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">فهم تكلفة الفرصة البديلة في الحياة اليومية</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">Understanding Opportunity Cost in Daily Life</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">تعلم كيف ينطبق هذا المفهوم الأساسي على القرارات اليومية التي تتخذها...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">Learn how this fundamental concept applies to everyday decisions you make...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#مفاهيم</span>
+                            <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#الحياة_الواقعية</span>
+                        </div>
+                        <a href="blog-post-3.html" class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="environment">
+                    <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">🌱</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٢٨ أبريل ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 28, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">الاقتصاد الأخضر: طريق الاستدامة</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">Green Economics: The Path to Sustainability</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">استكشاف كيف يمكن للسياسات الاقتصادية معالجة التحديات البيئية...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">Exploring how economic policies can address environmental challenges...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-green-300 px-3 py-1 text-xs font-bold border-2 border-black">#البيئة</span>
+                            <span class="bg-blue-300 px-3 py-1 text-xs font-bold border-2 border-black">#السياسة</span>
+                        </div>
+                        <a href="blog-post-4.html" class="neo-button bg-green-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 5 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="concepts">
+                    <div class="bg-gradient-to-br from-red-500 to-pink-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">📊</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٢٠ أبريل ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 20, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">قراءة البيانات الاقتصادية كالمحترفين</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">Reading Economic Data Like a Pro</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">دليل للمبتدئين لتفسير الرسوم البيانية والجداول والمؤشرات الاقتصادية...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">A beginner's guide to interpreting charts, graphs, and economic indicators...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#البيانات</span>
+                            <span class="bg-red-300 px-3 py-1 text-xs font-bold border-2 border-black">#المهارات</span>
+                        </div>
+                        <a href="blog-post-5.html" class="neo-button bg-red-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 6 -->
+                <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="career">
+                    <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-8 border-b-4 border-black">
+                        <div class="text-6xl mb-4">🎓</div>
+                        <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٥ أبريل ٢٠٢٤</span>
+                        <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 15, 2024</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="lang-ar text-2xl font-bold mb-3">المسارات المهنية في الاقتصاد</h3>
+                        <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">Career Paths in Economics</h3>
+
+                        <p class="lang-ar mb-4 text-gray-700">اكتشف الفرص الوظيفية المثيرة المتاحة مع خلفية اقتصادية...</p>
+                        <p class="lang-en lang-hidden mb-4 text-gray-700">Discover the exciting career opportunities available with an economics background...</p>
+
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#مهنة</span>
+                            <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#المستقبل</span>
+                        </div>
+                        <a href="blog-post-6.html" class="neo-button bg-purple-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                            <span class="lang-ar">اقرأ المزيد ←</span>
+                            <span class="lang-en lang-hidden">READ MORE →</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-20">
+                <div class="neo-border bg-yellow-300 p-12 max-w-md mx-auto">
+                    <div class="text-8xl mb-6">🔍</div>
+                    <h3 class="lang-ar text-2xl font-bold mb-4">لم يتم العثور على نتائج</h3>
+                    <h3 class="lang-en lang-hidden text-2xl font-bold mb-4">No Results Found</h3>
+                    <p class="lang-ar font-semibold">جرب البحث بكلمات مختلفة أو اختر فئة أخرى</p>
+                    <p class="lang-en lang-hidden font-semibold">Try searching with different keywords or select another category</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="py-20 px-4 bg-purple-500 border-t-4 border-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="lang-ar">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform -rotate-2">اشترك في</span>
+                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform rotate-2">النشرة الإخبارية</span>
+                </h2>
+                <p class="text-xl font-bold text-white mb-8">احصل على أحدث المقالات والنصائح مباشرة إلى بريدك الإلكتروني! 📬</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                    <input type="email" placeholder="بريدك الإلكتروني" class="flex-1 px-6 py-4 text-lg font-bold border-4 border-black focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    <button type="submit" class="neo-button bg-yellow-300 px-10 py-4 text-lg font-bold whitespace-nowrap">
+                        اشترك الآن! 🚀
+                    </button>
+                </form>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h2 class="text-4xl md:text-5xl font-black mb-6 text-white">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform rotate-2">Subscribe to</span>
+                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform -rotate-2">Newsletter</span>
+                </h2>
+                <p class="text-xl font-bold text-white mb-8">Get the latest articles and tips directly to your inbox! 📬</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-1 px-6 py-4 text-lg font-bold border-4 border-black focus:outline-none focus:ring-4 focus:ring-yellow-400">
+                    <button type="submit" class="neo-button bg-yellow-300 px-10 py-4 text-lg font-bold whitespace-nowrap">
+                        Subscribe Now! 🚀
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-4 border-t-4 border-black">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="lang-ar">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform rotate-2">نادي</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform -rotate-2">مبارك</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">جعل تعليم الاقتصاد متاحًا وجذابًا وممتعًا للطلاب في البحرين وخارجها.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">صُنع بـ ❤️ لطلاب الاقتصاد</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© ٢٠٢٤ نادي مبارك. جميع الحقوق محفوظة.</p>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform -rotate-2">MUBARAK</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform rotate-2">CLUB</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">Making economics education accessible, engaging, and fun for students in Bahrain and beyond.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">Made with ❤️ for Economics Students</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© 2024 Mubarak Club. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switcher
+        let currentLang = 'ar';
+
+        function switchLanguage(lang) {
+            if (currentLang === lang) return;
+            currentLang = lang;
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            const arElements = document.querySelectorAll('.lang-ar');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (lang === 'ar') {
+                arElements.forEach(el => el.classList.remove('lang-hidden'));
+                enElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-ar').classList.add('active');
+                document.getElementById('lang-en').classList.remove('active');
+            } else {
+                enElements.forEach(el => el.classList.remove('lang-hidden'));
+                arElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-en').classList.add('active');
+                document.getElementById('lang-ar').classList.remove('active');
+            }
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        const savedLang = localStorage.getItem('preferred-language');
+        if (savedLang && savedLang !== 'ar') {
+            switchLanguage(savedLang);
+        }
+
+        // Filter Functionality
+        let currentFilter = 'all';
+
+        function filterPosts(category) {
+            currentFilter = category;
+            const posts = document.querySelectorAll('.blog-card');
+            const searchAr = document.getElementById('search-ar').value.toLowerCase();
+            const searchEn = document.getElementById('search-en').value.toLowerCase();
+            const searchTerm = currentLang === 'ar' ? searchAr : searchEn;
+
+            let visibleCount = 0;
+
+            posts.forEach(post => {
+                const postCategory = post.getAttribute('data-category');
+                const postText = post.textContent.toLowerCase();
+
+                const categoryMatch = category === 'all' || postCategory === category;
+                const searchMatch = !searchTerm || postText.includes(searchTerm);
+
+                if (categoryMatch && searchMatch) {
+                    post.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+
+            // Update active filter button
+            document.querySelectorAll('.filter-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show/hide no results message
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        // Search Functionality
+        document.getElementById('search-ar').addEventListener('input', function() {
+            filterPosts(currentFilter);
+        });
+
+        document.getElementById('search-en').addEventListener('input', function() {
+            filterPosts(currentFilter);
+        });
+    </script>
+</body>
+</html>

@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd Mubarak Club neobrutalist personal website\n\nCreated a creative neobrutalist personal webpage for economics education with three versions:\n- English version (index.html)\n- Arabic version with RTL support (index-ar.html)\n- Bilingual version with creative language switcher (index-bilingual.html)\n\nFeatures:\n- Bold neobrutalist design with thick borders and vibrant colors\n- Smooth scroll animations and transitions\n- Responsive layout for all devices\n- Video tutorials section for YouTube content\n- Blog section for economics articles\n- Contact form and resources section\n- Creative fixed language switcher with Arabic as default\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ],
     "deny": [],
     "ask": []

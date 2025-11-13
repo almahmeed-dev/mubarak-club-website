@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - الصفحة غير موجودة | نادي مبارك</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', 'Space Grotesk', sans-serif;
+        }
+
+        [dir="ltr"] * {
+            font-family: 'Space Grotesk', 'Cairo', sans-serif;
+        }
+
+        .neo-border {
+            border: 4px solid #000;
+        }
+
+        [dir="rtl"] .neo-border {
+            box-shadow: -8px 8px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border {
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        .neo-button {
+            border: 4px solid #000;
+            transition: all 0.15s ease;
+        }
+
+        [dir="rtl"] .neo-button {
+            box-shadow: -6px 6px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button {
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        [dir="rtl"] .neo-button:hover {
+            transform: translate(-3px, 3px);
+            box-shadow: -3px 3px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            z-index: 100;
+        }
+
+        [dir="rtl"] .lang-switcher {
+            left: 20px;
+        }
+
+        [dir="ltr"] .lang-switcher {
+            right: 20px;
+        }
+
+        .lang-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lang-option.active {
+            transform: scale(1.1);
+        }
+
+        .lang-option:not(.active) {
+            opacity: 0.6;
+        }
+
+        .lang-hidden {
+            display: none !important;
+        }
+
+        .bg-pattern {
+            background-color: #fff;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bounce-animation {
+            animation: bounce 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-pattern overflow-x-hidden">
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <div class="neo-border bg-white p-2 flex gap-2">
+            <button onclick="switchLanguage('ar')" id="lang-ar" class="lang-option active bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇧🇭</span>
+                <span>عربي</span>
+            </button>
+            <button onclick="switchLanguage('en')" id="lang-en" class="lang-option bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇬🇧</span>
+                <span>EN</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 404 Content -->
+    <div class="min-h-screen flex items-center justify-center py-20 px-4 relative overflow-hidden">
+        <!-- Floating Background Elements -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-20 right-10 w-32 h-32 bg-pink-400 border-4 border-black transform -rotate-12 float-animation"></div>
+            <div class="absolute top-40 left-20 w-24 h-24 bg-cyan-400 border-4 border-black rounded-full" style="animation: float 4s ease-in-out infinite;"></div>
+            <div class="absolute bottom-40 right-20 w-40 h-40 bg-yellow-300 border-4 border-black transform rotate-12" style="animation: float 5s ease-in-out infinite;"></div>
+            <div class="absolute bottom-20 left-40 w-28 h-28 bg-lime-400 border-4 border-black" style="animation: float 3.5s ease-in-out infinite;"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- Arabic Content -->
+            <div class="lang-ar">
+                <!-- 404 Number -->
+                <div class="mb-12">
+                    <h1 class="text-9xl md:text-[200px] font-black mb-4">
+                        <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 neo-border transform -rotate-2">404</span>
+                    </h1>
+                </div>
+
+                <!-- Error Message -->
+                <div class="mb-12">
+                    <div class="inline-block bg-yellow-300 px-8 py-4 neo-border transform rotate-1 mb-6">
+                        <h2 class="text-4xl md:text-5xl font-black">عفوًا! الصفحة غير موجودة</h2>
+                    </div>
+
+                    <div class="neo-border bg-white p-8 max-w-2xl mx-auto">
+                        <div class="text-8xl mb-6 bounce-animation">🤔</div>
+                        <p class="text-xl font-bold mb-4">يبدو أنك تبحث عن صفحة غير موجودة!</p>
+                        <p class="text-lg font-semibold text-gray-700">
+                            ربما تكون الصفحة قد انتقلت، أو أن الرابط غير صحيح. دعنا نعيدك إلى المسار الصحيح!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <a href="index-bilingual.html" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🏠 العودة للرئيسية
+                    </a>
+                    <a href="blog.html" class="neo-button bg-cyan-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        📖 المدونة
+                    </a>
+                    <a href="videos.html" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🎥 الفيديوهات
+                    </a>
+                </div>
+
+                <!-- Funny Economics Quote -->
+                <div class="neo-border bg-purple-400 p-6 max-w-2xl mx-auto">
+                    <p class="text-xl font-bold text-white">
+                        💡 نصيحة اقتصادية: في بعض الأحيان، الضياع يقودنا لاكتشافات جديدة!<br>
+                        لكن ليس هذه المرة... عُد للصفحة الرئيسية! 😄
+                    </p>
+                </div>
+            </div>
+
+            <!-- English Content -->
+            <div class="lang-en lang-hidden">
+                <!-- 404 Number -->
+                <div class="mb-12">
+                    <h1 class="text-9xl md:text-[200px] font-black mb-4">
+                        <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 neo-border transform rotate-2">404</span>
+                    </h1>
+                </div>
+
+                <!-- Error Message -->
+                <div class="mb-12">
+                    <div class="inline-block bg-yellow-300 px-8 py-4 neo-border transform -rotate-1 mb-6">
+                        <h2 class="text-4xl md:text-5xl font-black">Oops! Page Not Found</h2>
+                    </div>
+
+                    <div class="neo-border bg-white p-8 max-w-2xl mx-auto">
+                        <div class="text-8xl mb-6 bounce-animation">🤔</div>
+                        <p class="text-xl font-bold mb-4">Looks like you're searching for a page that doesn't exist!</p>
+                        <p class="text-lg font-semibold text-gray-700">
+                            The page might have moved, or the link is incorrect. Let's get you back on track!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <a href="index-bilingual.html" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🏠 Back to Home
+                    </a>
+                    <a href="blog.html" class="neo-button bg-cyan-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        📖 Blog
+                    </a>
+                    <a href="videos.html" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🎥 Videos
+                    </a>
+                </div>
+
+                <!-- Funny Economics Quote -->
+                <div class="neo-border bg-purple-400 p-6 max-w-2xl mx-auto">
+                    <p class="text-xl font-bold text-white">
+                        💡 Economics Tip: Sometimes getting lost leads to new discoveries!<br>
+                        But not this time... head back home! 😄
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-4 border-t-4 border-black">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="lang-ar">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform rotate-2">نادي</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform -rotate-2">مبارك</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">جعل تعليم الاقتصاد متاحًا وجذابًا وممتعًا للطلاب في البحرين وخارجها.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">صُنع بـ ❤️ لطلاب الاقتصاد</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© ٢٠٢٤ نادي مبارك. جميع الحقوق محفوظة.</p>
+            </div>
+            <div class="lang-en lang-hidden">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform -rotate-2">MUBARAK</span>
+                    <span class="bg-pink-500 px-3 py-1 inline-block transform rotate-2">CLUB</span>
+                </h3>
+                <p class="text-gray-300 font-semibold mb-8">Making economics education accessible, engaging, and fun for students in Bahrain and beyond.</p>
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">Made with ❤️ for Economics Students</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© 2024 Mubarak Club. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switcher
+        let currentLang = 'ar';
+
+        function switchLanguage(lang) {
+            if (currentLang === lang) return;
+            currentLang = lang;
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            const arElements = document.querySelectorAll('.lang-ar');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (lang === 'ar') {
+                arElements.forEach(el => el.classList.remove('lang-hidden'));
+                enElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-ar').classList.add('active');
+                document.getElementById('lang-en').classList.remove('active');
+            } else {
+                enElements.forEach(el => el.classList.remove('lang-hidden'));
+                arElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-en').classList.add('active');
+                document.getElementById('lang-ar').classList.remove('active');
+            }
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        const savedLang = localStorage.getItem('preferred-language');
+        if (savedLang && savedLang !== 'ar') {
+            switchLanguage(savedLang);
+        }
+    </script>
+</body>
+</html>
