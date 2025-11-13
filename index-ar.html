@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نادي مبارك - مدرس اقتصاد ومنشئ محتوى</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .neo-border {
+            border: 4px solid #000;
+            box-shadow: -8px 8px 0px #000;
+        }
+
+        .neo-border-thick {
+            border: 5px solid #000;
+            box-shadow: -12px 12px 0px #000;
+        }
+
+        .neo-hover {
+            transition: all 0.2s ease;
+        }
+
+        .neo-hover:hover {
+            transform: translate(-4px, 4px);
+            box-shadow: -4px 4px 0px #000;
+        }
+
+        .neo-button {
+            border: 4px solid #000;
+            box-shadow: -6px 6px 0px #000;
+            transition: all 0.15s ease;
+        }
+
+        .neo-button:hover {
+            transform: translate(-3px, 3px);
+            box-shadow: -3px 3px 0px #000;
+        }
+
+        .neo-button:active {
+            transform: translate(-6px, 6px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .rotate-in {
+            opacity: 0;
+            transform: rotate(5deg) scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .rotate-in.visible {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .bg-pattern {
+            background-color: #fff;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
+        }
+
+        .text-outline {
+            text-shadow:
+                -3px -3px 0 #000,
+                3px -3px 0 #000,
+                -3px 3px 0 #000,
+                3px 3px 0 #000;
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-shadow {
+            0%, 100% { box-shadow: -8px 8px 0px #000; }
+            50% { box-shadow: -12px 12px 0px #000; }
+        }
+
+        .pulse-shadow {
+            animation: pulse-shadow 2s ease-in-out infinite;
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* RTL specific adjustments */
+        .rtl-flip {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+<body class="bg-pattern overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-yellow-300 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0">
+                    <h1 class="text-3xl font-bold tracking-tight">
+                        <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform rotate-2">مبارك</span>
+                        <span class="bg-pink-500 text-white px-4 py-2 inline-block transform -rotate-2">كلوب</span>
+                    </h1>
+                </div>
+                <div class="hidden md:flex space-x-2 space-x-reverse">
+                    <a href="#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">من أنا</a>
+                    <a href="#videos" class="neo-button bg-pink-400 px-6 py-2 font-bold">الفيديوهات</a>
+                    <a href="#blog" class="neo-button bg-lime-400 px-6 py-2 font-bold">المدونة</a>
+                    <a href="#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">تواصل</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden neo-button bg-white px-4 py-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t-4 border-black bg-yellow-300">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#about" class="block neo-button bg-cyan-400 px-6 py-3 font-bold text-center">من أنا</a>
+                <a href="#videos" class="block neo-button bg-pink-400 px-6 py-3 font-bold text-center">الفيديوهات</a>
+                <a href="#blog" class="block neo-button bg-lime-400 px-6 py-3 font-bold text-center">المدونة</a>
+                <a href="#contact" class="block neo-button bg-purple-400 px-6 py-3 font-bold text-center">تواصل</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center py-20 px-4 relative overflow-hidden">
+        <!-- Floating Shapes Background -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-20 right-10 w-32 h-32 bg-pink-400 border-4 border-black transform -rotate-12 float-animation"></div>
+            <div class="absolute top-40 left-20 w-24 h-24 bg-cyan-400 border-4 border-black rounded-full" style="animation: float 4s ease-in-out infinite;"></div>
+            <div class="absolute bottom-40 right-20 w-40 h-40 bg-yellow-300 border-4 border-black transform rotate-12" style="animation: float 5s ease-in-out infinite;"></div>
+            <div class="absolute bottom-20 left-40 w-28 h-28 bg-lime-400 border-4 border-black" style="animation: float 3.5s ease-in-out infinite;"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="fade-in">
+                <div class="inline-block bg-purple-500 px-6 py-2 neo-border transform rotate-2 mb-8">
+                    <p class="text-white font-bold text-lg">📚 معلم الاقتصاد</p>
+                </div>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 fade-in stagger-1">
+                <span class="inline-block bg-black text-white px-6 py-4 neo-border-thick transform -rotate-1">نادي</span>
+                <br>
+                <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-4 neo-border-thick transform rotate-1 mt-4">مبارك</span>
+            </h1>
+
+            <div class="fade-in stagger-2">
+                <p class="text-2xl md:text-4xl font-bold mb-12 max-w-3xl mx-auto">
+                    <span class="bg-yellow-300 px-4 py-2 border-4 border-black inline-block transform -rotate-1">نجعل الاقتصاد</span>
+                    <br class="md:hidden">
+                    <span class="bg-cyan-400 px-4 py-2 border-4 border-black inline-block transform rotate-1 mt-2">ممتعًا وسهلًا</span>
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in stagger-3">
+                <a href="#videos" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                    🎥 شاهد الفيديوهات
+                </a>
+                <a href="#blog" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                    📖 اقرأ المدونة
+                </a>
+            </div>
+
+            <div class="mt-16 fade-in stagger-4">
+                <p class="text-lg font-semibold mb-4">تدريس الاقتصاد للمرحلة الثانوية في البحرين 🇧🇭</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <span class="bg-red-400 px-4 py-2 border-3 border-black font-bold text-sm">#الاقتصاد</span>
+                    <span class="bg-blue-400 px-4 py-2 border-3 border-black font-bold text-sm">#التعليم</span>
+                    <span class="bg-green-400 px-4 py-2 border-3 border-black font-bold text-sm">#الثانوية</span>
+                    <span class="bg-orange-400 px-4 py-2 border-3 border-black font-bold text-sm">#البحرين</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-cyan-400 border-t-4 border-b-4 border-black relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="slide-in-right mb-12">
+                <h2 class="text-5xl md:text-7xl font-black mb-4">
+                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform rotate-1">من أنا</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="slide-in-right stagger-1">
+                    <div class="neo-border-thick bg-yellow-300 p-8 hover-lift">
+                        <div class="text-8xl mb-6">👨‍🏫</div>
+                        <h3 class="text-3xl font-bold mb-4">معلم الاقتصاد</h3>
+                        <p class="text-lg mb-4 leading-relaxed">
+                            مرحبًا بكم في نادي مبارك! أنا شغوف بجعل الاقتصاد سهلاً وممتعًا لطلاب المرحلة الثانوية في البحرين. من خلال أساليب التدريس الإبداعية والأمثلة الواقعية، أساعد الطلاب على فهم المفاهيم الاقتصادية التي تشكل عالمنا.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            مهمتي هي إلهام الجيل القادم من المفكرين الاقتصاديين ورجال الأعمال والمواطنين المطلعين الذين يمكنهم التعامل مع تعقيدات اقتصادنا العالمي.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 slide-in-left stagger-2">
+                    <div class="neo-border bg-pink-400 p-6 hover-lift">
+                        <h4 class="text-2xl font-bold mb-3 flex items-center">
+                            <span class="text-4xl ml-3">🎯</span>
+                            فلسفتي التعليمية
+                        </h4>
+                        <p class="text-lg">يجب أن يكون تعلم الاقتصاد تفاعليًا وعمليًا وممتعًا. أربط النظرية بالتطبيقات الواقعية التي يمكن للطلاب الارتباط بها.</p>
+                    </div>
+
+                    <div class="neo-border bg-lime-400 p-6 hover-lift">
+                        <h4 class="text-2xl font-bold mb-3 flex items-center">
+                            <span class="text-4xl ml-3">💡</span>
+                            ما أقدمه
+                        </h4>
+                        <p class="text-lg">دروس فيديو، أدلة دراسية، نصائح للتحضير للامتحانات، ورؤى حول الأحداث الاقتصادية التي تؤثر على البحرين والعالم.</p>
+                    </div>
+
+                    <div class="neo-border bg-purple-400 p-6 hover-lift">
+                        <h4 class="text-2xl font-bold mb-3 flex items-center">
+                            <span class="text-4xl ml-3">🌟</span>
+                            هدفي
+                        </h4>
+                        <p class="text-lg">إنشاء مجتمع حيث يشعر الطلاب بالثقة في معرفتهم الاقتصادية ومتحمسين لتعلم المزيد.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl md:text-7xl font-black mb-6">
+                    <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform -rotate-1">مكتبة</span>
+                    <span class="bg-yellow-300 px-6 py-3 border-4 border-black inline-block transform rotate-1">الفيديو</span>
+                </h2>
+                <p class="text-xl font-semibold max-w-2xl mx-auto">
+                    <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                        شاهد دروسي في الاقتصاد على يوتيوب 🎬
+                    </span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Card 1 -->
+                <div class="scale-in stagger-1">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-red-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">📊 العرض والطلب</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">فهم أساسيات منحنيات العرض والطلب.</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الجزئي</span>
+                                <span class="bg-lime-300 px-3 py-1 text-sm font-bold border-2 border-black">الأساسيات</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="scale-in stagger-2">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-blue-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">💰 التضخم المالي</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">ما هو التضخم وكيف يؤثر على قوتك الشرائية؟</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الكلي</span>
+                                <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">أحداث جارية</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="scale-in stagger-3">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-green-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">🏦 الأنظمة المصرفية</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">كيف تعمل البنوك ودور البنوك المركزية في الاقتصاد.</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-cyan-300 px-3 py-1 text-sm font-bold border-2 border-black">الأنظمة المالية</span>
+                                <span class="bg-orange-300 px-3 py-1 text-sm font-bold border-2 border-black">متقدم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="scale-in stagger-4">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-purple-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">📈 الناتج المحلي والنمو</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">قياس الأداء الاقتصادي من خلال الناتج المحلي الإجمالي ومؤشرات النمو.</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-red-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الكلي</span>
+                                <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">المقاييس</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 -->
+                <div class="scale-in stagger-5">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-yellow-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">🌍 التجارة الدولية</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">فهم التجارة العالمية والتعريفات الجمركية والميزة النسبية.</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-blue-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد العالمي</span>
+                                <span class="bg-green-300 px-3 py-1 text-sm font-bold border-2 border-black">التجارة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 -->
+                <div class="scale-in stagger-6">
+                    <div class="neo-border bg-white hover-lift">
+                        <div class="bg-pink-500 p-4 border-b-4 border-black">
+                            <h3 class="text-xl font-bold text-white">💼 هياكل السوق</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                <!-- Replace with your YouTube video ID -->
+                                <iframe
+                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <p class="font-semibold mb-3">استكشاف الاحتكارات واحتكار القلة والمنافسة الكاملة.</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الجزئي</span>
+                                <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">الأسواق</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <a href="https://youtube.com" target="_blank" class="neo-button bg-red-500 text-white px-10 py-5 text-xl font-bold inline-flex items-center gap-3">
+                    <span>🎬</span>
+                    <span>شاهد الكل على يوتيوب</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 px-4 bg-lime-400 border-t-4 border-b-4 border-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl md:text-7xl font-black mb-6">
+                    <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform rotate-2">مقالات</span>
+                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform -rotate-2">المدونة</span>
+                </h2>
+                <p class="text-xl font-semibold max-w-2xl mx-auto">
+                    <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
+                        رؤى ونصائح وتحليلات اقتصادية ✍️
+                    </span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="rotate-in stagger-1">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">📚</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٥ مايو ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">١٠ نصائح للتفوق في امتحان الاقتصاد</h3>
+                            <p class="mb-4 text-gray-700">استراتيجيات مثبتة لمساعدتك على الاستعداد بفعالية وتحقيق أفضل أداء في يوم الامتحان...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#نصائح دراسية</span>
+                                <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#امتحانات</span>
+                            </div>
+                            <button class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="rotate-in stagger-2">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">🇧🇭</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٠ مايو ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">اقتصاد البحرين: الماضي والحاضر والمستقبل</h3>
+                            <p class="mb-4 text-gray-700">نظرة متعمقة على التنمية الاقتصادية للبحرين وما ينتظر المملكة في المستقبل...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#البحرين</span>
+                                <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#تحليل</span>
+                            </div>
+                            <button class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="rotate-in stagger-3">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">💡</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٥ مايو ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">فهم تكلفة الفرصة البديلة في الحياة اليومية</h3>
+                            <p class="mb-4 text-gray-700">تعلم كيف ينطبق هذا المفهوم الأساسي على القرارات اليومية التي تتخذها...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#مفاهيم</span>
+                                <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#الحياة الواقعية</span>
+                            </div>
+                            <button class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="rotate-in stagger-4">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">🌱</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٢٨ أبريل ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">الاقتصاد الأخضر: طريق الاستدامة</h3>
+                            <p class="mb-4 text-gray-700">استكشاف كيف يمكن للسياسات الاقتصادية معالجة التحديات البيئية...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-green-300 px-3 py-1 text-xs font-bold border-2 border-black">#البيئة</span>
+                                <span class="bg-blue-300 px-3 py-1 text-xs font-bold border-2 border-black">#السياسة</span>
+                            </div>
+                            <button class="neo-button bg-green-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 5 -->
+                <article class="rotate-in stagger-5">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-red-500 to-pink-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">📊</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٢٠ أبريل ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">قراءة البيانات الاقتصادية كالمحترفين</h3>
+                            <p class="mb-4 text-gray-700">دليل للمبتدئين لتفسير الرسوم البيانية والجداول والمؤشرات الاقتصادية...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#البيانات</span>
+                                <span class="bg-red-300 px-3 py-1 text-xs font-bold border-2 border-black">#المهارات</span>
+                            </div>
+                            <button class="neo-button bg-red-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 6 -->
+                <article class="rotate-in stagger-6">
+                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">🎓</div>
+                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٥ أبريل ٢٠٢٤</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-3">المسارات المهنية في الاقتصاد</h3>
+                            <p class="mb-4 text-gray-700">اكتشف الفرص الوظيفية المثيرة المتاحة مع خلفية اقتصادية...</p>
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#مهنة</span>
+                                <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#المستقبل</span>
+                            </div>
+                            <button class="neo-button bg-purple-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <button class="neo-button bg-black text-lime-400 px-10 py-5 text-xl font-bold">
+                    عرض جميع المقالات ←
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="py-20 px-4 bg-purple-500">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl md:text-7xl font-black text-white mb-6">
+                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform -rotate-2">موارد</span>
+                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform rotate-2">مجانية</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="scale-in stagger-1">
+                    <div class="neo-border bg-cyan-300 p-8 text-center hover-lift">
+                        <div class="text-6xl mb-4">📝</div>
+                        <h3 class="text-2xl font-bold mb-3">أدلة الدراسة</h3>
+                        <p class="mb-4">أدلة شاملة لجميع المواضيع الرئيسية</p>
+                        <button class="neo-button bg-white px-6 py-3 font-bold">تحميل</button>
+                    </div>
+                </div>
+
+                <div class="scale-in stagger-2">
+                    <div class="neo-border bg-pink-300 p-8 text-center hover-lift">
+                        <div class="text-6xl mb-4">✅</div>
+                        <h3 class="text-2xl font-bold mb-3">اختبارات تدريبية</h3>
+                        <p class="mb-4">اختبر معرفتك بالاختبارات القصيرة</p>
+                        <button class="neo-button bg-white px-6 py-3 font-bold">جرب الآن</button>
+                    </div>
+                </div>
+
+                <div class="scale-in stagger-3">
+                    <div class="neo-border bg-lime-300 p-8 text-center hover-lift">
+                        <div class="text-6xl mb-4">📖</div>
+                        <h3 class="text-2xl font-bold mb-3">مسرد المصطلحات</h3>
+                        <p class="mb-4">المصطلحات والتعريفات الرئيسية موضحة</p>
+                        <button class="neo-button bg-white px-6 py-3 font-bold">استكشف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-yellow-300 border-t-4 border-black">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl md:text-7xl font-black mb-6">
+                    <span class="bg-black text-yellow-300 px-6 py-3 border-4 border-black inline-block transform rotate-2">تواصل</span>
+                    <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform -rotate-2">معنا</span>
+                </h2>
+                <p class="text-xl font-semibold">
+                    <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                        لديك أسئلة؟ دعنا نتواصل! 📬
+                    </span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="slide-in-right">
+                    <div class="neo-border bg-white p-8">
+                        <h3 class="text-2xl font-bold mb-6">أرسل رسالة</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block font-bold mb-2">الاسم</label>
+                                <input type="text" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="اسمك">
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-2">البريد الإلكتروني</label>
+                                <input type="email" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="your@email.com">
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-2">الرسالة</label>
+                                <textarea rows="4" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="رسالتك..."></textarea>
+                            </div>
+                            <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-4 font-bold text-lg w-full">
+                                إرسال الرسالة 🚀
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="slide-in-left space-y-6">
+                    <div class="neo-border bg-pink-400 p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">📧</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">البريد الإلكتروني</h4>
+                                <p class="font-semibold">contact@mubarakclub.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="neo-border bg-cyan-400 p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">🎥</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">يوتيوب</h4>
+                                <p class="font-semibold">@MubarakClub</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="neo-border bg-lime-400 p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">📱</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">وسائل التواصل</h4>
+                                <div class="flex gap-3 mt-2">
+                                    <a href="#" class="neo-button bg-white px-4 py-2 font-bold text-sm">تويتر</a>
+                                    <a href="#" class="neo-button bg-white px-4 py-2 font-bold text-sm">إنستغرام</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="neo-border bg-purple-400 p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">📍</div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">الموقع</h4>
+                                <p class="font-semibold">البحرين 🇧🇭</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12 px-4 border-t-4 border-black">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform rotate-2">نادي</span>
+                        <span class="bg-pink-500 px-3 py-1 inline-block transform -rotate-2">مبارك</span>
+                    </h3>
+                    <p class="text-gray-300 font-semibold">جعل تعليم الاقتصاد متاحًا وجذابًا وممتعًا للطلاب في البحرين وخارجها.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold mb-4 bg-cyan-400 text-black px-3 py-1 inline-block">روابط سريعة</h4>
+                    <ul class="space-y-2 font-semibold">
+                        <li><a href="#about" class="hover:text-yellow-300 transition">← من أنا</a></li>
+                        <li><a href="#videos" class="hover:text-pink-400 transition">← الفيديوهات</a></li>
+                        <li><a href="#blog" class="hover:text-lime-400 transition">← المدونة</a></li>
+                        <li><a href="#contact" class="hover:text-cyan-400 transition">← تواصل</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold mb-4 bg-lime-400 text-black px-3 py-1 inline-block">النشرة الإخبارية</h4>
+                    <p class="text-gray-300 mb-4 font-semibold">احصل على نصائح اقتصادية أسبوعية!</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 border-4 border-white bg-black text-white font-semibold flex-1 focus:outline-none focus:ring-4 focus:ring-pink-400">
+                        <button class="bg-pink-500 px-6 py-2 border-4 border-white font-bold hover:bg-pink-600 transition">اشترك</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t-4 border-white pt-8 text-center">
+                <p class="font-bold text-lg">
+                    <span class="bg-purple-500 px-4 py-2 inline-block">صُنع بـ ❤️ لطلاب الاقتصاد</span>
+                </p>
+                <p class="text-gray-400 mt-4 font-semibold">© ٢٠٢٤ نادي مبارك. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="fixed bottom-8 left-8 neo-button bg-pink-500 text-white p-4 text-2xl hidden z-50">
+        ↑
+    </button>
+
+    <script>
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .rotate-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                scrollTopBtn.classList.remove('hidden');
+            } else {
+                scrollTopBtn.classList.add('hidden');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add parallax effect to floating shapes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.float-animation');
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.1);
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add dynamic cursor effect (optional enhancement)
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.float-animation');
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = (window.innerWidth - e.pageX * speed) / 100;
+                const y = (window.innerHeight - e.pageY * speed) / 100;
+                shape.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
