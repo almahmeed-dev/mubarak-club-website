@@ -8,36 +8,60 @@ const DEFAULT_PASSWORD = 'mubarak2024';
 
 // Wait for Firebase to be ready
 let firebaseReady = false;
+let authCheckInterval = null;
 
 // Check Firebase initialization
 function waitForFirebase() {
-    return new Promise((resolve) => {
-        if (window.firebaseApp && window.firebaseApp.auth) {
-            firebaseReady = true;
-            resolve();
-        } else {
-            setTimeout(() => waitForFirebase().then(resolve), 100);
-        }
+    return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds max
+
+        authCheckInterval = setInterval(() => {
+            attempts++;
+
+            // Check if Firebase is initialized
+            if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+                console.log('✅ Firebase initialized successfully');
+                clearInterval(authCheckInterval);
+                firebaseReady = true;
+                resolve();
+            } else if (attempts >= maxAttempts) {
+                clearInterval(authCheckInterval);
+                console.error('❌ Firebase initialization timeout');
+                reject(new Error('Firebase failed to initialize. Please check firebase-config.js'));
+            }
+        }, 100);
     });
 }
 
-// Firebase Auth State Observer
-waitForFirebase().then(() => {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // User is signed in
-            console.log('✅ User authenticated:', user.email);
-            showDashboard();
-            document.getElementById('current-user').textContent = user.email;
-            loadAllData();
-        } else {
-            // User is signed out
-            console.log('❌ User not authenticated');
-            document.getElementById('login-screen').classList.remove('hidden');
-            document.getElementById('admin-dashboard').classList.add('hidden');
-        }
+// Initialize Firebase Auth State Observer
+waitForFirebase()
+    .then(() => {
+        console.log('🔐 Setting up Firebase Auth observer...');
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in
+                console.log('✅ User authenticated:', user.email);
+                showDashboard();
+                document.getElementById('current-user').textContent = user.email;
+                loadAllData();
+            } else {
+                // User is signed out
+                console.log('❌ User not authenticated');
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('admin-dashboard').classList.add('hidden');
+            }
+        });
+    })
+    .catch((error) => {
+        console.error('❌ Firebase initialization failed:', error);
+        alert('⚠️ Firebase Configuration Error!\n\n' +
+              'Firebase failed to initialize. Please check:\n' +
+              '1. firebase-config.js exists\n' +
+              '2. Firebase credentials are correct\n' +
+              '3. Internet connection is active\n\n' +
+              'Error: ' + error.message);
     });
-});
 
 // Login form handler with Firebase Auth
 document.getElementById('login-form').addEventListener('submit', async function(e) {
@@ -53,6 +77,11 @@ document.getElementById('login-form').addEventListener('submit', async function(
     submitButton.disabled = true;
 
     try {
+        // Check if Firebase is ready
+        if (!firebaseReady || typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
+            throw new Error('Firebase is not initialized. Please refresh the page and try again.');
+        }
+
         // Try to sign in with Firebase
         await firebase.auth().signInWithEmailAndPassword(email, password);
         console.log('✅ Login successful');
