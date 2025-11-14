@@ -1,0 +1,31 @@
+# Firebase Configuration (contains API keys)
+firebase-config.js
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Build files
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude settings (optional)
+.claude/settings.local.json

@@ -21,9 +21,9 @@ A creative neobrutalist personal webpage for economics education with bilingual 
 
 ## 📄 Pages
 
-1. **index-bilingual.html** - Homepage with language switcher (recommended)
-2. **index.html** - English-only version
-3. **index-ar.html** - Arabic-only version
+1. **index.html** - Homepage with language switcher (bilingual - Arabic default)
+2. **index-english-only.html** - English-only version (backup)
+3. **index-ar.html** - Arabic-only version (backup)
 4. **blog.html** - Blog listing with search and filter
 5. **blog-post-1.html** - Sample blog post
 6. **videos.html** - Video gallery organized by categories

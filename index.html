@@ -1,25 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mubarak Club - Economics Teacher & Content Creator</title>
+    <title>نادي مبارك - Mubarak Club</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Cairo', 'Space Grotesk', sans-serif;
+        }
+
+        [dir="ltr"] * {
+            font-family: 'Space Grotesk', 'Cairo', sans-serif;
         }
 
         .neo-border {
             border: 4px solid #000;
+        }
+
+        [dir="rtl"] .neo-border {
+            box-shadow: -8px 8px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border {
             box-shadow: 8px 8px 0px #000;
         }
 
         .neo-border-thick {
             border: 5px solid #000;
+        }
+
+        [dir="rtl"] .neo-border-thick {
+            box-shadow: -12px 12px 0px #000;
+        }
+
+        [dir="ltr"] .neo-border-thick {
             box-shadow: 12px 12px 0px #000;
         }
 
@@ -27,25 +45,91 @@
             transition: all 0.2s ease;
         }
 
-        .neo-hover:hover {
+        [dir="rtl"] .neo-hover:hover {
+            transform: translate(-4px, 4px);
+            box-shadow: -4px 4px 0px #000;
+        }
+
+        [dir="ltr"] .neo-hover:hover {
             transform: translate(4px, 4px);
             box-shadow: 4px 4px 0px #000;
         }
 
         .neo-button {
             border: 4px solid #000;
-            box-shadow: 6px 6px 0px #000;
             transition: all 0.15s ease;
         }
 
-        .neo-button:hover {
+        [dir="rtl"] .neo-button {
+            box-shadow: -6px 6px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button {
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        [dir="rtl"] .neo-button:hover {
+            transform: translate(-3px, 3px);
+            box-shadow: -3px 3px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button:hover {
             transform: translate(3px, 3px);
             box-shadow: 3px 3px 0px #000;
         }
 
-        .neo-button:active {
+        [dir="rtl"] .neo-button:active {
+            transform: translate(-6px, 6px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        [dir="ltr"] .neo-button:active {
             transform: translate(6px, 6px);
             box-shadow: 0px 0px 0px #000;
+        }
+
+        /* Language Switcher Styles */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            z-index: 100;
+            animation: slideDown 0.5s ease;
+        }
+
+        [dir="rtl"] .lang-switcher {
+            left: 20px;
+        }
+
+        [dir="ltr"] .lang-switcher {
+            right: 20px;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .lang-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lang-option.active {
+            transform: scale(1.1);
+        }
+
+        .lang-option:not(.active) {
+            opacity: 0.6;
+        }
+
+        .lang-hidden {
+            display: none !important;
         }
 
         .fade-in {
@@ -61,8 +145,15 @@
 
         .slide-in-left {
             opacity: 0;
-            transform: translateX(-50px);
             transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        [dir="rtl"] .slide-in-left {
+            transform: translateX(50px);
+        }
+
+        [dir="ltr"] .slide-in-left {
+            transform: translateX(-50px);
         }
 
         .slide-in-left.visible {
@@ -72,8 +163,15 @@
 
         .slide-in-right {
             opacity: 0;
-            transform: translateX(50px);
             transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        [dir="rtl"] .slide-in-right {
+            transform: translateX(-50px);
+        }
+
+        [dir="ltr"] .slide-in-right {
+            transform: translateX(50px);
         }
 
         .slide-in-right.visible {
@@ -94,8 +192,16 @@
 
         .rotate-in {
             opacity: 0;
-            transform: rotate(-5deg) scale(0.9);
+            transform: scale(0.9);
             transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        [dir="rtl"] .rotate-in {
+            transform: rotate(5deg) scale(0.9);
+        }
+
+        [dir="ltr"] .rotate-in {
+            transform: rotate(-5deg) scale(0.9);
         }
 
         .rotate-in.visible {
@@ -107,14 +213,6 @@
             background-color: #fff;
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.03) 35px, rgba(0,0,0,.03) 70px);
-        }
-
-        .text-outline {
-            text-shadow:
-                -3px -3px 0 #000,
-                3px -3px 0 #000,
-                -3px 3px 0 #000,
-                3px 3px 0 #000;
         }
 
         .hover-lift {
@@ -132,15 +230,6 @@
 
         .float-animation {
             animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse-shadow {
-            0%, 100% { box-shadow: 8px 8px 0px #000; }
-            50% { box-shadow: 12px 12px 0px #000; }
-        }
-
-        .pulse-shadow {
-            animation: pulse-shadow 2s ease-in-out infinite;
         }
 
         .stagger-1 { transition-delay: 0.1s; }
@@ -164,9 +253,39 @@
             width: 100%;
             height: 100%;
         }
+
+        /* Flip animation for language switch */
+        @keyframes flipIn {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        .flip-in {
+            animation: flipIn 0.6s ease;
+        }
     </style>
 </head>
 <body class="bg-pattern overflow-x-hidden">
+
+    <!-- Creative Language Switcher -->
+    <div class="lang-switcher">
+        <div class="neo-border bg-white p-2 flex gap-2 pulse-shadow">
+            <button onclick="switchLanguage('ar')" id="lang-ar" class="lang-option active bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇧🇭</span>
+                <span>عربي</span>
+            </button>
+            <button onclick="switchLanguage('en')" id="lang-en" class="lang-option bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 font-bold text-lg border-4 border-black flex items-center gap-2">
+                <span class="text-2xl">🇬🇧</span>
+                <span>EN</span>
+            </button>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-yellow-300 border-b-4 border-black">
@@ -174,15 +293,33 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0">
                     <h1 class="text-3xl font-bold tracking-tight">
-                        <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform -rotate-2">MUBARAK</span>
-                        <span class="bg-pink-500 text-white px-4 py-2 inline-block transform rotate-2">CLUB</span>
+                        <!-- Arabic -->
+                        <span class="lang-ar">
+                            <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform rotate-2">مبارك</span>
+                            <span class="bg-pink-500 text-white px-4 py-2 inline-block transform -rotate-2">كلوب</span>
+                        </span>
+                        <!-- English -->
+                        <span class="lang-en lang-hidden">
+                            <span class="bg-black text-yellow-300 px-4 py-2 inline-block transform -rotate-2">MUBARAK</span>
+                            <span class="bg-pink-500 text-white px-4 py-2 inline-block transform rotate-2">CLUB</span>
+                        </span>
                     </h1>
                 </div>
-                <div class="hidden md:flex space-x-2">
-                    <a href="#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">ABOUT</a>
-                    <a href="#videos" class="neo-button bg-pink-400 px-6 py-2 font-bold">VIDEOS</a>
-                    <a href="#blog" class="neo-button bg-lime-400 px-6 py-2 font-bold">BLOG</a>
-                    <a href="#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">CONTACT</a>
+                <div class="hidden md:flex gap-2">
+                    <!-- Arabic Nav -->
+                    <div class="lang-ar flex gap-2">
+                        <a href="#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">من أنا</a>
+                        <a href="#videos" class="neo-button bg-pink-400 px-6 py-2 font-bold">الفيديوهات</a>
+                        <a href="#blog" class="neo-button bg-lime-400 px-6 py-2 font-bold">المدونة</a>
+                        <a href="#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">تواصل</a>
+                    </div>
+                    <!-- English Nav -->
+                    <div class="lang-en lang-hidden flex gap-2">
+                        <a href="#about" class="neo-button bg-cyan-400 px-6 py-2 font-bold">ABOUT</a>
+                        <a href="#videos" class="neo-button bg-pink-400 px-6 py-2 font-bold">VIDEOS</a>
+                        <a href="#blog" class="neo-button bg-lime-400 px-6 py-2 font-bold">BLOG</a>
+                        <a href="#contact" class="neo-button bg-purple-400 px-6 py-2 font-bold">CONTACT</a>
+                    </div>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden neo-button bg-white px-4 py-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,10 +331,20 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden border-t-4 border-black bg-yellow-300">
             <div class="px-4 py-4 space-y-2">
-                <a href="#about" class="block neo-button bg-cyan-400 px-6 py-3 font-bold text-center">ABOUT</a>
-                <a href="#videos" class="block neo-button bg-pink-400 px-6 py-3 font-bold text-center">VIDEOS</a>
-                <a href="#blog" class="block neo-button bg-lime-400 px-6 py-3 font-bold text-center">BLOG</a>
-                <a href="#contact" class="block neo-button bg-purple-400 px-6 py-3 font-bold text-center">CONTACT</a>
+                <!-- Arabic Mobile Nav -->
+                <div class="lang-ar space-y-2">
+                    <a href="#about" class="block neo-button bg-cyan-400 px-6 py-3 font-bold text-center">من أنا</a>
+                    <a href="#videos" class="block neo-button bg-pink-400 px-6 py-3 font-bold text-center">الفيديوهات</a>
+                    <a href="#blog" class="block neo-button bg-lime-400 px-6 py-3 font-bold text-center">المدونة</a>
+                    <a href="#contact" class="block neo-button bg-purple-400 px-6 py-3 font-bold text-center">تواصل</a>
+                </div>
+                <!-- English Mobile Nav -->
+                <div class="lang-en lang-hidden space-y-2">
+                    <a href="#about" class="block neo-button bg-cyan-400 px-6 py-3 font-bold text-center">ABOUT</a>
+                    <a href="#videos" class="block neo-button bg-pink-400 px-6 py-3 font-bold text-center">VIDEOS</a>
+                    <a href="#blog" class="block neo-button bg-lime-400 px-6 py-3 font-bold text-center">BLOG</a>
+                    <a href="#contact" class="block neo-button bg-purple-400 px-6 py-3 font-bold text-center">CONTACT</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -213,42 +360,87 @@
         </div>
 
         <div class="max-w-6xl mx-auto text-center relative z-10">
-            <div class="fade-in">
-                <div class="inline-block bg-purple-500 px-6 py-2 neo-border transform -rotate-2 mb-8">
-                    <p class="text-white font-bold text-lg">📚 ECONOMICS EDUCATOR</p>
+            <!-- Arabic Hero -->
+            <div class="lang-ar">
+                <div class="fade-in">
+                    <div class="inline-block bg-purple-500 px-6 py-2 neo-border transform rotate-2 mb-8">
+                        <p class="text-white font-bold text-lg">📚 معلم الاقتصاد</p>
+                    </div>
+                </div>
+
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 fade-in stagger-1">
+                    <span class="inline-block bg-black text-white px-6 py-4 neo-border-thick transform -rotate-1">نادي</span>
+                    <br>
+                    <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-4 neo-border-thick transform rotate-1 mt-4">مبارك</span>
+                </h1>
+
+                <div class="fade-in stagger-2">
+                    <p class="text-2xl md:text-4xl font-bold mb-12 max-w-3xl mx-auto">
+                        <span class="bg-yellow-300 px-4 py-2 border-4 border-black inline-block transform -rotate-1">نجعل الاقتصاد</span>
+                        <br class="md:hidden">
+                        <span class="bg-cyan-400 px-4 py-2 border-4 border-black inline-block transform rotate-1 mt-2">ممتعًا وسهلًا</span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in stagger-3">
+                    <a href="#videos" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🎥 شاهد الفيديوهات
+                    </a>
+                    <a href="#blog" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        📖 اقرأ المدونة
+                    </a>
+                </div>
+
+                <div class="mt-16 fade-in stagger-4">
+                    <p class="text-lg font-semibold mb-4">تدريس الاقتصاد للمرحلة الثانوية في البحرين 🇧🇭</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <span class="bg-red-400 px-4 py-2 border-3 border-black font-bold text-sm">#الاقتصاد</span>
+                        <span class="bg-blue-400 px-4 py-2 border-3 border-black font-bold text-sm">#التعليم</span>
+                        <span class="bg-green-400 px-4 py-2 border-3 border-black font-bold text-sm">#الثانوية</span>
+                        <span class="bg-orange-400 px-4 py-2 border-3 border-black font-bold text-sm">#البحرين</span>
+                    </div>
                 </div>
             </div>
 
-            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 fade-in stagger-1">
-                <span class="inline-block bg-black text-white px-6 py-4 neo-border-thick transform rotate-1">MUBARAK</span>
-                <br>
-                <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-4 neo-border-thick transform -rotate-1 mt-4">CLUB</span>
-            </h1>
+            <!-- English Hero -->
+            <div class="lang-en lang-hidden">
+                <div class="fade-in">
+                    <div class="inline-block bg-purple-500 px-6 py-2 neo-border transform -rotate-2 mb-8">
+                        <p class="text-white font-bold text-lg">📚 ECONOMICS EDUCATOR</p>
+                    </div>
+                </div>
 
-            <div class="fade-in stagger-2">
-                <p class="text-2xl md:text-4xl font-bold mb-12 max-w-3xl mx-auto">
-                    <span class="bg-yellow-300 px-4 py-2 border-4 border-black inline-block transform rotate-1">Making Economics</span>
-                    <br class="md:hidden">
-                    <span class="bg-cyan-400 px-4 py-2 border-4 border-black inline-block transform -rotate-1 mt-2">Fun & Accessible</span>
-                </p>
-            </div>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 fade-in stagger-1">
+                    <span class="inline-block bg-black text-white px-6 py-4 neo-border-thick transform rotate-1">MUBARAK</span>
+                    <br>
+                    <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-4 neo-border-thick transform -rotate-1 mt-4">CLUB</span>
+                </h1>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in stagger-3">
-                <a href="#videos" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
-                    🎥 WATCH VIDEOS
-                </a>
-                <a href="#blog" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
-                    📖 READ BLOG
-                </a>
-            </div>
+                <div class="fade-in stagger-2">
+                    <p class="text-2xl md:text-4xl font-bold mb-12 max-w-3xl mx-auto">
+                        <span class="bg-yellow-300 px-4 py-2 border-4 border-black inline-block transform rotate-1">Making Economics</span>
+                        <br class="md:hidden">
+                        <span class="bg-cyan-400 px-4 py-2 border-4 border-black inline-block transform -rotate-1 mt-2">Fun & Accessible</span>
+                    </p>
+                </div>
 
-            <div class="mt-16 fade-in stagger-4">
-                <p class="text-lg font-semibold mb-4">Teaching High School Economics in Bahrain 🇧🇭</p>
-                <div class="flex flex-wrap gap-3 justify-center">
-                    <span class="bg-red-400 px-4 py-2 border-3 border-black font-bold text-sm">#Economics</span>
-                    <span class="bg-blue-400 px-4 py-2 border-3 border-black font-bold text-sm">#Education</span>
-                    <span class="bg-green-400 px-4 py-2 border-3 border-black font-bold text-sm">#HighSchool</span>
-                    <span class="bg-orange-400 px-4 py-2 border-3 border-black font-bold text-sm">#Bahrain</span>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in stagger-3">
+                    <a href="#videos" class="neo-button bg-pink-500 text-white px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        🎥 WATCH VIDEOS
+                    </a>
+                    <a href="#blog" class="neo-button bg-lime-400 px-10 py-5 text-xl font-bold w-full sm:w-auto">
+                        📖 READ BLOG
+                    </a>
+                </div>
+
+                <div class="mt-16 fade-in stagger-4">
+                    <p class="text-lg font-semibold mb-4">Teaching High School Economics in Bahrain 🇧🇭</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <span class="bg-red-400 px-4 py-2 border-3 border-black font-bold text-sm">#Economics</span>
+                        <span class="bg-blue-400 px-4 py-2 border-3 border-black font-bold text-sm">#Education</span>
+                        <span class="bg-green-400 px-4 py-2 border-3 border-black font-bold text-sm">#HighSchool</span>
+                        <span class="bg-orange-400 px-4 py-2 border-3 border-black font-bold text-sm">#Bahrain</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -257,49 +449,102 @@
     <!-- About Section -->
     <section id="about" class="py-20 px-4 bg-cyan-400 border-t-4 border-b-4 border-black relative">
         <div class="max-w-6xl mx-auto">
-            <div class="slide-in-left mb-12">
-                <h2 class="text-5xl md:text-7xl font-black mb-4">
-                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform -rotate-1">ABOUT ME</span>
-                </h2>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="slide-in-left stagger-1">
-                    <div class="neo-border-thick bg-yellow-300 p-8 hover-lift">
-                        <div class="text-8xl mb-6">👨‍🏫</div>
-                        <h3 class="text-3xl font-bold mb-4">Economics Educator</h3>
-                        <p class="text-lg mb-4 leading-relaxed">
-                            Welcome to Mubarak Club! I'm passionate about making economics accessible and engaging for high school students in Bahrain. Through creative teaching methods and real-world examples, I help students understand economic concepts that shape our world.
-                        </p>
-                        <p class="text-lg leading-relaxed">
-                            My mission is to inspire the next generation of economic thinkers, entrepreneurs, and informed citizens who can navigate the complexities of our global economy.
-                        </p>
-                    </div>
+            <!-- Arabic About -->
+            <div class="lang-ar">
+                <div class="slide-in-right mb-12">
+                    <h2 class="text-5xl md:text-7xl font-black mb-4">
+                        <span class="bg-white px-6 py-3 border-4 border-black inline-block transform rotate-1">من أنا</span>
+                    </h2>
                 </div>
 
-                <div class="space-y-6 slide-in-right stagger-2">
-                    <div class="neo-border bg-pink-400 p-6 hover-lift">
-                        <h4 class="text-2xl font-bold mb-3 flex items-center">
-                            <span class="text-4xl mr-3">🎯</span>
-                            My Teaching Philosophy
-                        </h4>
-                        <p class="text-lg">Learning economics should be interactive, practical, and fun. I connect theory with real-world applications that students can relate to.</p>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="slide-in-right stagger-1">
+                        <div class="neo-border-thick bg-yellow-300 p-8 hover-lift">
+                            <div class="text-8xl mb-6">👨‍🏫</div>
+                            <h3 class="text-3xl font-bold mb-4">معلم الاقتصاد</h3>
+                            <p class="text-lg mb-4 leading-relaxed">
+                                مرحبًا بكم في نادي مبارك! أنا شغوف بجعل الاقتصاد سهلاً وممتعًا لطلاب المرحلة الثانوية في البحرين. من خلال أساليب التدريس الإبداعية والأمثلة الواقعية، أساعد الطلاب على فهم المفاهيم الاقتصادية التي تشكل عالمنا.
+                            </p>
+                            <p class="text-lg leading-relaxed">
+                                مهمتي هي إلهام الجيل القادم من المفكرين الاقتصاديين ورجال الأعمال والمواطنين المطلعين الذين يمكنهم التعامل مع تعقيدات اقتصادنا العالمي.
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="neo-border bg-lime-400 p-6 hover-lift">
-                        <h4 class="text-2xl font-bold mb-3 flex items-center">
-                            <span class="text-4xl mr-3">💡</span>
-                            What I Offer
-                        </h4>
-                        <p class="text-lg">Video tutorials, study guides, exam preparation tips, and insights into economic events affecting Bahrain and the world.</p>
+                    <div class="space-y-6 slide-in-left stagger-2">
+                        <div class="neo-border bg-pink-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl ml-3">🎯</span>
+                                فلسفتي التعليمية
+                            </h4>
+                            <p class="text-lg">يجب أن يكون تعلم الاقتصاد تفاعليًا وعمليًا وممتعًا. أربط النظرية بالتطبيقات الواقعية التي يمكن للطلاب الارتباط بها.</p>
+                        </div>
+
+                        <div class="neo-border bg-lime-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl ml-3">💡</span>
+                                ما أقدمه
+                            </h4>
+                            <p class="text-lg">دروس فيديو، أدلة دراسية، نصائح للتحضير للامتحانات، ورؤى حول الأحداث الاقتصادية التي تؤثر على البحرين والعالم.</p>
+                        </div>
+
+                        <div class="neo-border bg-purple-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl ml-3">🌟</span>
+                                هدفي
+                            </h4>
+                            <p class="text-lg">إنشاء مجتمع حيث يشعر الطلاب بالثقة في معرفتهم الاقتصادية ومتحمسين لتعلم المزيد.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English About -->
+            <div class="lang-en lang-hidden">
+                <div class="slide-in-left mb-12">
+                    <h2 class="text-5xl md:text-7xl font-black mb-4">
+                        <span class="bg-white px-6 py-3 border-4 border-black inline-block transform -rotate-1">ABOUT ME</span>
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="slide-in-left stagger-1">
+                        <div class="neo-border-thick bg-yellow-300 p-8 hover-lift">
+                            <div class="text-8xl mb-6">👨‍🏫</div>
+                            <h3 class="text-3xl font-bold mb-4">Economics Educator</h3>
+                            <p class="text-lg mb-4 leading-relaxed">
+                                Welcome to Mubarak Club! I'm passionate about making economics accessible and engaging for high school students in Bahrain. Through creative teaching methods and real-world examples, I help students understand economic concepts that shape our world.
+                            </p>
+                            <p class="text-lg leading-relaxed">
+                                My mission is to inspire the next generation of economic thinkers, entrepreneurs, and informed citizens who can navigate the complexities of our global economy.
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="neo-border bg-purple-400 p-6 hover-lift">
-                        <h4 class="text-2xl font-bold mb-3 flex items-center">
-                            <span class="text-4xl mr-3">🌟</span>
-                            My Goal
-                        </h4>
-                        <p class="text-lg">To create a community where students feel confident in their economic knowledge and excited to learn more.</p>
+                    <div class="space-y-6 slide-in-right stagger-2">
+                        <div class="neo-border bg-pink-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl mr-3">🎯</span>
+                                My Teaching Philosophy
+                            </h4>
+                            <p class="text-lg">Learning economics should be interactive, practical, and fun. I connect theory with real-world applications that students can relate to.</p>
+                        </div>
+
+                        <div class="neo-border bg-lime-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl mr-3">💡</span>
+                                What I Offer
+                            </h4>
+                            <p class="text-lg">Video tutorials, study guides, exam preparation tips, and insights into economic events affecting Bahrain and the world.</p>
+                        </div>
+
+                        <div class="neo-border bg-purple-400 p-6 hover-lift">
+                            <h4 class="text-2xl font-bold mb-3 flex items-center">
+                                <span class="text-4xl mr-3">🌟</span>
+                                My Goal
+                            </h4>
+                            <p class="text-lg">To create a community where students feel confident in their economic knowledge and excited to learn more.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -309,181 +554,160 @@
     <!-- Videos Section -->
     <section id="videos" class="py-20 px-4">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl md:text-7xl font-black mb-6">
-                    <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform rotate-1">VIDEO</span>
-                    <span class="bg-yellow-300 px-6 py-3 border-4 border-black inline-block transform -rotate-1">LIBRARY</span>
-                </h2>
-                <p class="text-xl font-semibold max-w-2xl mx-auto">
-                    <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
-                        Watch my economics tutorials on YouTube 🎬
-                    </span>
-                </p>
-            </div>
+            <!-- Arabic Videos -->
+            <div class="lang-ar">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform -rotate-1">مكتبة</span>
+                        <span class="bg-yellow-300 px-6 py-3 border-4 border-black inline-block transform rotate-1">الفيديو</span>
+                    </h2>
+                    <p class="text-xl font-semibold max-w-2xl mx-auto">
+                        <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                            شاهد دروسي في الاقتصاد على يوتيوب 🎬
+                        </span>
+                    </p>
+                </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Video Card 1 -->
-                <div class="scale-in stagger-1">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-red-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">📊 Supply & Demand</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="scale-in stagger-1">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-red-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">📊 العرض والطلب</h3>
                             </div>
-                            <p class="font-semibold mb-3">Understanding the fundamentals of supply and demand curves.</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">Microeconomics</span>
-                                <span class="bg-lime-300 px-3 py-1 text-sm font-bold border-2 border-black">Basics</span>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">فهم أساسيات منحنيات العرض والطلب.</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الجزئي</span>
+                                    <span class="bg-lime-300 px-3 py-1 text-sm font-bold border-2 border-black">الأساسيات</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scale-in stagger-2">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-blue-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">💰 التضخم المالي</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">ما هو التضخم وكيف يؤثر على قوتك الشرائية؟</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">الاقتصاد الكلي</span>
+                                    <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">أحداث جارية</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scale-in stagger-3">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-green-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">🏦 الأنظمة المصرفية</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">كيف تعمل البنوك ودور البنوك المركزية في الاقتصاد.</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-cyan-300 px-3 py-1 text-sm font-bold border-2 border-black">الأنظمة المالية</span>
+                                    <span class="bg-orange-300 px-3 py-1 text-sm font-bold border-2 border-black">متقدم</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Video Card 2 -->
-                <div class="scale-in stagger-2">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-blue-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">💰 Inflation Explained</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p class="font-semibold mb-3">What is inflation and how does it affect your purchasing power?</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">Macroeconomics</span>
-                                <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">Current Events</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video Card 3 -->
-                <div class="scale-in stagger-3">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-green-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">🏦 Banking Systems</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p class="font-semibold mb-3">How banks work and the role of central banks in the economy.</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-cyan-300 px-3 py-1 text-sm font-bold border-2 border-black">Financial Systems</span>
-                                <span class="bg-orange-300 px-3 py-1 text-sm font-bold border-2 border-black">Advanced</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video Card 4 -->
-                <div class="scale-in stagger-4">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-purple-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">📈 GDP & Economic Growth</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p class="font-semibold mb-3">Measuring economic performance through GDP and growth indicators.</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-red-300 px-3 py-1 text-sm font-bold border-2 border-black">Macroeconomics</span>
-                                <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">Metrics</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video Card 5 -->
-                <div class="scale-in stagger-5">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-yellow-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">🌍 International Trade</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p class="font-semibold mb-3">Understanding global trade, tariffs, and comparative advantage.</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-blue-300 px-3 py-1 text-sm font-bold border-2 border-black">Global Economics</span>
-                                <span class="bg-green-300 px-3 py-1 text-sm font-bold border-2 border-black">Trade</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Video Card 6 -->
-                <div class="scale-in stagger-6">
-                    <div class="neo-border bg-white hover-lift">
-                        <div class="bg-pink-500 p-4 border-b-4 border-black">
-                            <h3 class="text-xl font-bold text-white">💼 Market Structures</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="video-wrapper neo-border bg-gray-200 mb-4">
-                                <!-- Replace with your YouTube video ID -->
-                                <iframe
-                                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p class="font-semibold mb-3">Exploring monopolies, oligopolies, and perfect competition.</p>
-                            <div class="flex gap-2 flex-wrap">
-                                <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">Microeconomics</span>
-                                <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">Markets</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-center mt-12 fade-in">
+                    <a href="https://youtube.com" target="_blank" class="neo-button bg-red-500 text-white px-10 py-5 text-xl font-bold inline-flex items-center gap-3">
+                        <span>🎬</span>
+                        <span>شاهد الكل على يوتيوب</span>
+                    </a>
                 </div>
             </div>
 
-            <div class="text-center mt-12 fade-in">
-                <a href="https://youtube.com" target="_blank" class="neo-button bg-red-500 text-white px-10 py-5 text-xl font-bold inline-flex items-center gap-3">
-                    <span>🎬</span>
-                    <span>VIEW ALL ON YOUTUBE</span>
-                </a>
+            <!-- English Videos -->
+            <div class="lang-en lang-hidden">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform rotate-1">VIDEO</span>
+                        <span class="bg-yellow-300 px-6 py-3 border-4 border-black inline-block transform -rotate-1">LIBRARY</span>
+                    </h2>
+                    <p class="text-xl font-semibold max-w-2xl mx-auto">
+                        <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                            Watch my economics tutorials on YouTube 🎬
+                        </span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="scale-in stagger-1">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-red-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">📊 Supply & Demand</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">Understanding the fundamentals of supply and demand curves.</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">Microeconomics</span>
+                                    <span class="bg-lime-300 px-3 py-1 text-sm font-bold border-2 border-black">Basics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scale-in stagger-2">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-blue-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">💰 Inflation Explained</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">What is inflation and how does it affect your purchasing power?</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-pink-300 px-3 py-1 text-sm font-bold border-2 border-black">Macroeconomics</span>
+                                    <span class="bg-purple-300 px-3 py-1 text-sm font-bold border-2 border-black">Current Events</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scale-in stagger-3">
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-green-500 p-4 border-b-4 border-black">
+                                <h3 class="text-xl font-bold text-white">🏦 Banking Systems</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="font-semibold mb-3">How banks work and the role of central banks in the economy.</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    <span class="bg-cyan-300 px-3 py-1 text-sm font-bold border-2 border-black">Financial Systems</span>
+                                    <span class="bg-orange-300 px-3 py-1 text-sm font-bold border-2 border-black">Advanced</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12 fade-in">
+                    <a href="https://youtube.com" target="_blank" class="neo-button bg-red-500 text-white px-10 py-5 text-xl font-bold inline-flex items-center gap-3">
+                        <span>🎬</span>
+                        <span>VIEW ALL ON YOUTUBE</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -491,178 +715,157 @@
     <!-- Blog Section -->
     <section id="blog" class="py-20 px-4 bg-lime-400 border-t-4 border-b-4 border-black">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl md:text-7xl font-black mb-6">
-                    <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform -rotate-2">BLOG</span>
-                    <span class="bg-white px-6 py-3 border-4 border-black inline-block transform rotate-2">POSTS</span>
-                </h2>
-                <p class="text-xl font-semibold max-w-2xl mx-auto">
-                    <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
-                        Insights, tips, and economic analysis ✍️
-                    </span>
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Blog Post 1 -->
-                <article class="rotate-in stagger-1">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">📚</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 15, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">10 Tips for Acing Your Economics Exam</h3>
-                            <p class="mb-4 text-gray-700">Proven strategies to help you prepare effectively and perform your best on exam day...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#Study Tips</span>
-                                <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#Exams</span>
-                            </div>
-                            <button class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 2 -->
-                <article class="rotate-in stagger-2">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">🇧🇭</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 10, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">Bahrain's Economy: Past, Present, and Future</h3>
-                            <p class="mb-4 text-gray-700">An in-depth look at Bahrain's economic development and what lies ahead for the kingdom...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#Bahrain</span>
-                                <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#Analysis</span>
-                            </div>
-                            <button class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 3 -->
-                <article class="rotate-in stagger-3">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">💡</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 5, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">Understanding Opportunity Cost in Daily Life</h3>
-                            <p class="mb-4 text-gray-700">Learn how this fundamental concept applies to everyday decisions you make...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#Concepts</span>
-                                <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#Real Life</span>
-                            </div>
-                            <button class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 4 -->
-                <article class="rotate-in stagger-4">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">🌱</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 28, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">Green Economics: The Path to Sustainability</h3>
-                            <p class="mb-4 text-gray-700">Exploring how economic policies can address environmental challenges...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-green-300 px-3 py-1 text-xs font-bold border-2 border-black">#Environment</span>
-                                <span class="bg-blue-300 px-3 py-1 text-xs font-bold border-2 border-black">#Policy</span>
-                            </div>
-                            <button class="neo-button bg-green-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 5 -->
-                <article class="rotate-in stagger-5">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-red-500 to-pink-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">📊</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 20, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">Reading Economic Data Like a Pro</h3>
-                            <p class="mb-4 text-gray-700">A beginner's guide to interpreting charts, graphs, and economic indicators...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#Data</span>
-                                <span class="bg-red-300 px-3 py-1 text-xs font-bold border-2 border-black">#Skills</span>
-                            </div>
-                            <button class="neo-button bg-red-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 6 -->
-                <article class="rotate-in stagger-6">
-                    <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                        <div class="bg-gradient-to-br from-purple-500 to-indigo-600 p-8 border-b-4 border-black">
-                            <div class="text-6xl mb-4">🎓</div>
-                            <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">Apr 15, 2024</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-3">Career Paths in Economics</h3>
-                            <p class="mb-4 text-gray-700">Discover the exciting career opportunities available with an economics background...</p>
-                            <div class="flex gap-2 mb-4">
-                                <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#Career</span>
-                                <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#Future</span>
-                            </div>
-                            <button class="neo-button bg-purple-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-
-            <div class="text-center mt-12 fade-in">
-                <button class="neo-button bg-black text-lime-400 px-10 py-5 text-xl font-bold">
-                    VIEW ALL POSTS →
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resources Section -->
-    <section class="py-20 px-4 bg-purple-500">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl md:text-7xl font-black text-white mb-6">
-                    <span class="bg-yellow-300 text-black px-6 py-3 border-4 border-black inline-block transform rotate-2">FREE</span>
-                    <span class="bg-white text-purple-500 px-6 py-3 border-4 border-black inline-block transform -rotate-2">RESOURCES</span>
-                </h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="scale-in stagger-1">
-                    <div class="neo-border bg-cyan-300 p-8 text-center hover-lift">
-                        <div class="text-6xl mb-4">📝</div>
-                        <h3 class="text-2xl font-bold mb-3">Study Guides</h3>
-                        <p class="mb-4">Comprehensive guides for all major topics</p>
-                        <button class="neo-button bg-white px-6 py-3 font-bold">DOWNLOAD</button>
-                    </div>
+            <!-- Arabic Blog -->
+            <div class="lang-ar">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform rotate-2">مقالات</span>
+                        <span class="bg-white px-6 py-3 border-4 border-black inline-block transform -rotate-2">المدونة</span>
+                    </h2>
+                    <p class="text-xl font-semibold max-w-2xl mx-auto">
+                        <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
+                            رؤى ونصائح وتحليلات اقتصادية ✍️
+                        </span>
+                    </p>
                 </div>
 
-                <div class="scale-in stagger-2">
-                    <div class="neo-border bg-pink-300 p-8 text-center hover-lift">
-                        <div class="text-6xl mb-4">✅</div>
-                        <h3 class="text-2xl font-bold mb-3">Practice Tests</h3>
-                        <p class="mb-4">Test your knowledge with quizzes</p>
-                        <button class="neo-button bg-white px-6 py-3 font-bold">TRY NOW</button>
-                    </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="rotate-in stagger-1">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">📚</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٥ مايو ٢٠٢٤</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">١٠ نصائح للتفوق في امتحان الاقتصاد</h3>
+                                <p class="mb-4 text-gray-700">استراتيجيات مثبتة لمساعدتك على الاستعداد بفعالية وتحقيق أفضل أداء في يوم الامتحان...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#نصائح_دراسية</span>
+                                    <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#امتحانات</span>
+                                </div>
+                                <button class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rotate-in stagger-2">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">🇧🇭</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">١٠ مايو ٢٠٢٤</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">اقتصاد البحرين: الماضي والحاضر والمستقبل</h3>
+                                <p class="mb-4 text-gray-700">نظرة متعمقة على التنمية الاقتصادية للبحرين وما ينتظر المملكة في المستقبل...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#البحرين</span>
+                                    <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#تحليل</span>
+                                </div>
+                                <button class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rotate-in stagger-3">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">💡</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">٥ مايو ٢٠٢٤</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">فهم تكلفة الفرصة البديلة في الحياة اليومية</h3>
+                                <p class="mb-4 text-gray-700">تعلم كيف ينطبق هذا المفهوم الأساسي على القرارات اليومية التي تتخذها...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#مفاهيم</span>
+                                    <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#الحياة_الواقعية</span>
+                                </div>
+                                <button class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full">اقرأ المزيد ←</button>
+                            </div>
+                        </div>
+                    </article>
                 </div>
 
-                <div class="scale-in stagger-3">
-                    <div class="neo-border bg-lime-300 p-8 text-center hover-lift">
-                        <div class="text-6xl mb-4">📖</div>
-                        <h3 class="text-2xl font-bold mb-3">Glossary</h3>
-                        <p class="mb-4">Key terms and definitions explained</p>
-                        <button class="neo-button bg-white px-6 py-3 font-bold">EXPLORE</button>
-                    </div>
+                <div class="text-center mt-12 fade-in">
+                    <button class="neo-button bg-black text-lime-400 px-10 py-5 text-xl font-bold">
+                        عرض جميع المقالات ←
+                    </button>
+                </div>
+            </div>
+
+            <!-- English Blog -->
+            <div class="lang-en lang-hidden">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-black text-lime-400 px-6 py-3 border-4 border-black inline-block transform -rotate-2">BLOG</span>
+                        <span class="bg-white px-6 py-3 border-4 border-black inline-block transform rotate-2">POSTS</span>
+                    </h2>
+                    <p class="text-xl font-semibold max-w-2xl mx-auto">
+                        <span class="bg-pink-400 px-4 py-2 border-3 border-black inline-block">
+                            Insights, tips, and economic analysis ✍️
+                        </span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="rotate-in stagger-1">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">📚</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 15, 2024</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">10 Tips for Acing Your Economics Exam</h3>
+                                <p class="mb-4 text-gray-700">Proven strategies to help you prepare effectively and perform your best on exam day...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#Study Tips</span>
+                                    <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#Exams</span>
+                                </div>
+                                <button class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rotate-in stagger-2">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">🇧🇭</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 10, 2024</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Bahrain's Economy: Past, Present, and Future</h3>
+                                <p class="mb-4 text-gray-700">An in-depth look at Bahrain's economic development and what lies ahead for the kingdom...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#Bahrain</span>
+                                    <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#Analysis</span>
+                                </div>
+                                <button class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rotate-in stagger-3">
+                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
+                            <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
+                                <div class="text-6xl mb-4">💡</div>
+                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 5, 2024</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Understanding Opportunity Cost in Daily Life</h3>
+                                <p class="mb-4 text-gray-700">Learn how this fundamental concept applies to everyday decisions you make...</p>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#Concepts</span>
+                                    <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#Real Life</span>
+                                </div>
+                                <button class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="text-center mt-12 fade-in">
+                    <button class="neo-button bg-black text-lime-400 px-10 py-5 text-xl font-bold">
+                        VIEW ALL POSTS →
+                    </button>
                 </div>
             </div>
         </div>
@@ -671,82 +874,144 @@
     <!-- Contact Section -->
     <section id="contact" class="py-20 px-4 bg-yellow-300 border-t-4 border-black">
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl md:text-7xl font-black mb-6">
-                    <span class="bg-black text-yellow-300 px-6 py-3 border-4 border-black inline-block transform -rotate-2">GET IN</span>
-                    <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform rotate-2">TOUCH</span>
-                </h2>
-                <p class="text-xl font-semibold">
-                    <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
-                        Have questions? Let's connect! 📬
-                    </span>
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <div class="slide-in-left">
-                    <div class="neo-border bg-white p-8">
-                        <h3 class="text-2xl font-bold mb-6">Send a Message</h3>
-                        <form class="space-y-4">
-                            <div>
-                                <label class="block font-bold mb-2">Name</label>
-                                <input type="text" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="Your name">
-                            </div>
-                            <div>
-                                <label class="block font-bold mb-2">Email</label>
-                                <input type="email" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="your@email.com">
-                            </div>
-                            <div>
-                                <label class="block font-bold mb-2">Message</label>
-                                <textarea rows="4" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="Your message..."></textarea>
-                            </div>
-                            <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-4 font-bold text-lg w-full">
-                                SEND MESSAGE 🚀
-                            </button>
-                        </form>
-                    </div>
+            <!-- Arabic Contact -->
+            <div class="lang-ar">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-black text-yellow-300 px-6 py-3 border-4 border-black inline-block transform rotate-2">تواصل</span>
+                        <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform -rotate-2">معنا</span>
+                    </h2>
+                    <p class="text-xl font-semibold">
+                        <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                            لديك أسئلة؟ دعنا نتواصل! 📬
+                        </span>
+                    </p>
                 </div>
 
-                <div class="slide-in-right space-y-6">
-                    <div class="neo-border bg-pink-400 p-6">
-                        <div class="flex items-center gap-4">
-                            <div class="text-5xl">📧</div>
-                            <div>
-                                <h4 class="font-bold text-lg mb-1">Email</h4>
-                                <p class="font-semibold">contact@mubarakclub.com</p>
-                            </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="slide-in-right">
+                        <div class="neo-border bg-white p-8">
+                            <h3 class="text-2xl font-bold mb-6">أرسل رسالة</h3>
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block font-bold mb-2">الاسم</label>
+                                    <input type="text" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="اسمك">
+                                </div>
+                                <div>
+                                    <label class="block font-bold mb-2">البريد الإلكتروني</label>
+                                    <input type="email" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="your@email.com">
+                                </div>
+                                <div>
+                                    <label class="block font-bold mb-2">الرسالة</label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="رسالتك..."></textarea>
+                                </div>
+                                <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-4 font-bold text-lg w-full">
+                                    إرسال الرسالة 🚀
+                                </button>
+                            </form>
                         </div>
                     </div>
 
-                    <div class="neo-border bg-cyan-400 p-6">
-                        <div class="flex items-center gap-4">
-                            <div class="text-5xl">🎥</div>
-                            <div>
-                                <h4 class="font-bold text-lg mb-1">YouTube</h4>
-                                <p class="font-semibold">@MubarakClub</p>
+                    <div class="slide-in-left space-y-6">
+                        <div class="neo-border bg-pink-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">📧</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">البريد الإلكتروني</h4>
+                                    <p class="font-semibold">contact@mubarakclub.com</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="neo-border bg-lime-400 p-6">
-                        <div class="flex items-center gap-4">
-                            <div class="text-5xl">📱</div>
-                            <div>
-                                <h4 class="font-bold text-lg mb-1">Social Media</h4>
-                                <div class="flex gap-3 mt-2">
-                                    <a href="#" class="neo-button bg-white px-4 py-2 font-bold text-sm">Twitter</a>
-                                    <a href="#" class="neo-button bg-white px-4 py-2 font-bold text-sm">Instagram</a>
+                        <div class="neo-border bg-cyan-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">🎥</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">يوتيوب</h4>
+                                    <p class="font-semibold">@MubarakClub</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="neo-border bg-purple-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">📍</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">الموقع</h4>
+                                    <p class="font-semibold">البحرين 🇧🇭</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="neo-border bg-purple-400 p-6">
-                        <div class="flex items-center gap-4">
-                            <div class="text-5xl">📍</div>
-                            <div>
-                                <h4 class="font-bold text-lg mb-1">Location</h4>
-                                <p class="font-semibold">Bahrain 🇧🇭</p>
+            <!-- English Contact -->
+            <div class="lang-en lang-hidden">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-5xl md:text-7xl font-black mb-6">
+                        <span class="bg-black text-yellow-300 px-6 py-3 border-4 border-black inline-block transform -rotate-2">GET IN</span>
+                        <span class="bg-pink-500 text-white px-6 py-3 border-4 border-black inline-block transform rotate-2">TOUCH</span>
+                    </h2>
+                    <p class="text-xl font-semibold">
+                        <span class="bg-cyan-400 px-4 py-2 border-3 border-black inline-block">
+                            Have questions? Let's connect! 📬
+                        </span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="slide-in-left">
+                        <div class="neo-border bg-white p-8">
+                            <h3 class="text-2xl font-bold mb-6">Send a Message</h3>
+                            <form class="space-y-4">
+                                <div>
+                                    <label class="block font-bold mb-2">Name</label>
+                                    <input type="text" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="Your name">
+                                </div>
+                                <div>
+                                    <label class="block font-bold mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="your@email.com">
+                                </div>
+                                <div>
+                                    <label class="block font-bold mb-2">Message</label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border-4 border-black font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400" placeholder="Your message..."></textarea>
+                                </div>
+                                <button type="submit" class="neo-button bg-pink-500 text-white px-8 py-4 font-bold text-lg w-full">
+                                    SEND MESSAGE 🚀
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="slide-in-right space-y-6">
+                        <div class="neo-border bg-pink-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">📧</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Email</h4>
+                                    <p class="font-semibold">contact@mubarakclub.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="neo-border bg-cyan-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">🎥</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">YouTube</h4>
+                                    <p class="font-semibold">@MubarakClub</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="neo-border bg-purple-400 p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">📍</div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Location</h4>
+                                    <p class="font-semibold">Bahrain 🇧🇭</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -758,50 +1023,99 @@
     <!-- Footer -->
     <footer class="bg-black text-white py-12 px-4 border-t-4 border-black">
         <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
+            <!-- Arabic Footer -->
+            <div class="lang-ar">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform rotate-2">نادي</span>
+                        <span class="bg-pink-500 px-3 py-1 inline-block transform -rotate-2">مبارك</span>
+                    </h3>
+                    <p class="text-gray-300 font-semibold mb-8">جعل تعليم الاقتصاد متاحًا وجذابًا وممتعًا للطلاب في البحرين وخارجها.</p>
+                    <p class="font-bold text-lg">
+                        <span class="bg-purple-500 px-4 py-2 inline-block">صُنع بـ ❤️ لطلاب الاقتصاد</span>
+                    </p>
+                    <p class="text-gray-400 mt-4 font-semibold">© ٢٠٢٤ نادي مبارك. جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+
+            <!-- English Footer -->
+            <div class="lang-en lang-hidden">
+                <div class="text-center">
                     <h3 class="text-2xl font-bold mb-4">
                         <span class="bg-yellow-300 text-black px-3 py-1 inline-block transform -rotate-2">MUBARAK</span>
                         <span class="bg-pink-500 px-3 py-1 inline-block transform rotate-2">CLUB</span>
                     </h3>
-                    <p class="text-gray-300 font-semibold">Making economics education accessible, engaging, and fun for students in Bahrain and beyond.</p>
+                    <p class="text-gray-300 font-semibold mb-8">Making economics education accessible, engaging, and fun for students in Bahrain and beyond.</p>
+                    <p class="font-bold text-lg">
+                        <span class="bg-purple-500 px-4 py-2 inline-block">Made with ❤️ for Economics Students</span>
+                    </p>
+                    <p class="text-gray-400 mt-4 font-semibold">© 2024 Mubarak Club. All rights reserved.</p>
                 </div>
-
-                <div>
-                    <h4 class="text-xl font-bold mb-4 bg-cyan-400 text-black px-3 py-1 inline-block">Quick Links</h4>
-                    <ul class="space-y-2 font-semibold">
-                        <li><a href="#about" class="hover:text-yellow-300 transition">→ About Me</a></li>
-                        <li><a href="#videos" class="hover:text-pink-400 transition">→ Videos</a></li>
-                        <li><a href="#blog" class="hover:text-lime-400 transition">→ Blog</a></li>
-                        <li><a href="#contact" class="hover:text-cyan-400 transition">→ Contact</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-xl font-bold mb-4 bg-lime-400 text-black px-3 py-1 inline-block">Newsletter</h4>
-                    <p class="text-gray-300 mb-4 font-semibold">Get weekly economics tips!</p>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="Your email" class="px-4 py-2 border-4 border-white bg-black text-white font-semibold flex-1 focus:outline-none focus:ring-4 focus:ring-pink-400">
-                        <button class="bg-pink-500 px-6 py-2 border-4 border-white font-bold hover:bg-pink-600 transition">GO</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t-4 border-white pt-8 text-center">
-                <p class="font-bold text-lg">
-                    <span class="bg-purple-500 px-4 py-2 inline-block">Made with ❤️ for Economics Students</span>
-                </p>
-                <p class="text-gray-400 mt-4 font-semibold">© 2024 Mubarak Club. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scroll to Top Button -->
-    <button id="scroll-top" class="fixed bottom-8 right-8 neo-button bg-pink-500 text-white p-4 text-2xl hidden z-50">
+    <button id="scroll-top" class="fixed bottom-8 neo-button bg-pink-500 text-white p-4 text-2xl hidden z-50">
         ↑
     </button>
 
     <script>
+        // Language Switcher
+        let currentLang = 'ar'; // Default language
+
+        function switchLanguage(lang) {
+            if (currentLang === lang) return;
+
+            currentLang = lang;
+            const html = document.documentElement;
+
+            // Update HTML attributes
+            html.setAttribute('lang', lang);
+            html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            // Toggle visibility
+            const arElements = document.querySelectorAll('.lang-ar');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (lang === 'ar') {
+                arElements.forEach(el => el.classList.remove('lang-hidden'));
+                enElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-ar').classList.add('active');
+                document.getElementById('lang-en').classList.remove('active');
+                // Move scroll button to left for RTL
+                document.getElementById('scroll-top').style.left = '2rem';
+                document.getElementById('scroll-top').style.right = 'auto';
+            } else {
+                enElements.forEach(el => el.classList.remove('lang-hidden'));
+                arElements.forEach(el => el.classList.add('lang-hidden'));
+                document.getElementById('lang-en').classList.add('active');
+                document.getElementById('lang-ar').classList.remove('active');
+                // Move scroll button to right for LTR
+                document.getElementById('scroll-top').style.right = '2rem';
+                document.getElementById('scroll-top').style.left = 'auto';
+            }
+
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
+
+            // Re-trigger animations for visible elements
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .rotate-in').forEach(el => {
+                    if (!el.closest('.lang-hidden')) {
+                        el.classList.remove('visible');
+                        setTimeout(() => observer.observe(el), 10);
+                    }
+                });
+            }, 50);
+        }
+
+        // Load saved language preference
+        const savedLang = localStorage.getItem('preferred-language');
+        if (savedLang && savedLang !== 'ar') {
+            switchLanguage(savedLang);
+        }
+
         // Intersection Observer for Scroll Animations
         const observerOptions = {
             threshold: 0.1,
@@ -818,7 +1132,9 @@
 
         // Observe all animated elements
         document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .rotate-in').forEach(el => {
-            observer.observe(el);
+            if (!el.closest('.lang-hidden')) {
+                observer.observe(el);
+            }
         });
 
         // Mobile Menu Toggle
@@ -854,16 +1170,6 @@
             });
         });
 
-        // Add parallax effect to floating shapes
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const shapes = document.querySelectorAll('.float-animation');
-            shapes.forEach((shape, index) => {
-                const speed = 0.5 + (index * 0.1);
-                shape.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -875,17 +1181,6 @@
                         block: 'start'
                     });
                 }
-            });
-        });
-
-        // Add dynamic cursor effect (optional enhancement)
-        document.addEventListener('mousemove', (e) => {
-            const shapes = document.querySelectorAll('.float-animation');
-            shapes.forEach((shape, index) => {
-                const speed = (index + 1) * 0.01;
-                const x = (window.innerWidth - e.pageX * speed) / 100;
-                const y = (window.innerHeight - e.pageY * speed) / 100;
-                shape.style.transform += ` translate(${x}px, ${y}px)`;
             });
         });
     </script>
