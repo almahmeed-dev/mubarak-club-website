@@ -1,6 +1,12 @@
 // Admin Panel JavaScript - Mubarak Club CMS
+console.log('🔧 Loading admin.js...');
 
 // ==================== FIREBASE AUTHENTICATION ====================
+
+// Debug: Check Firebase initialization status
+console.log('🔍 Debug - Firebase object exists?', typeof firebase !== 'undefined');
+console.log('🔍 Debug - Firebase apps count:', typeof firebase !== 'undefined' ? firebase.apps.length : 'N/A');
+console.log('🔍 Debug - window.firebaseApp:', window.firebaseApp);
 
 // Default credentials (CHANGE THESE AFTER FIRST LOGIN!)
 const DEFAULT_EMAIL = 'admin@mubarakclub.com';
