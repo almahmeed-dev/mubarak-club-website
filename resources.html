@@ -470,9 +470,17 @@
             localStorage.setItem('preferred-language', lang);
         }
 
+        // Load saved language preference - default to Arabic
         const savedLang = localStorage.getItem('preferred-language');
-        if (savedLang && savedLang !== 'ar') {
-            switchLanguage(savedLang);
+
+        // Only switch if explicitly saved as 'en', otherwise default to Arabic
+        if (savedLang === 'en') {
+            switchLanguage('en');
+        } else {
+            // Ensure Arabic is the default
+            localStorage.setItem('preferred-language', 'ar');
+            // Make sure Arabic is showing
+            switchLanguage('ar');
         }
 
         // Load resources from localStorage (from admin panel)
