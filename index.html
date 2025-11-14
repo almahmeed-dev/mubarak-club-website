@@ -815,60 +815,8 @@
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <article class="rotate-in stagger-1">
-                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                            <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-8 border-b-4 border-black">
-                                <div class="text-6xl mb-4">📚</div>
-                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 15, 2024</span>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-2xl font-bold mb-3">10 Tips for Acing Your Economics Exam</h3>
-                                <p class="mb-4 text-gray-700">Proven strategies to help you prepare effectively and perform your best on exam day...</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="bg-yellow-300 px-3 py-1 text-xs font-bold border-2 border-black">#Study Tips</span>
-                                    <span class="bg-cyan-300 px-3 py-1 text-xs font-bold border-2 border-black">#Exams</span>
-                                </div>
-                                <button class="neo-button bg-pink-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="rotate-in stagger-2">
-                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                            <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 border-b-4 border-black">
-                                <div class="text-6xl mb-4">🇧🇭</div>
-                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 10, 2024</span>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-2xl font-bold mb-3">Bahrain's Economy: Past, Present, and Future</h3>
-                                <p class="mb-4 text-gray-700">An in-depth look at Bahrain's economic development and what lies ahead for the kingdom...</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="bg-lime-300 px-3 py-1 text-xs font-bold border-2 border-black">#Bahrain</span>
-                                    <span class="bg-purple-300 px-3 py-1 text-xs font-bold border-2 border-black">#Analysis</span>
-                                </div>
-                                <button class="neo-button bg-cyan-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="rotate-in stagger-3">
-                        <div class="neo-border bg-white hover-lift cursor-pointer h-full">
-                            <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-8 border-b-4 border-black">
-                                <div class="text-6xl mb-4">💡</div>
-                                <span class="bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">May 5, 2024</span>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-2xl font-bold mb-3">Understanding Opportunity Cost in Daily Life</h3>
-                                <p class="mb-4 text-gray-700">Learn how this fundamental concept applies to everyday decisions you make...</p>
-                                <div class="flex gap-2 mb-4">
-                                    <span class="bg-pink-300 px-3 py-1 text-xs font-bold border-2 border-black">#Concepts</span>
-                                    <span class="bg-orange-300 px-3 py-1 text-xs font-bold border-2 border-black">#Real Life</span>
-                                </div>
-                                <button class="neo-button bg-yellow-400 px-6 py-2 font-bold text-sm w-full">READ MORE →</button>
-                            </div>
-                        </div>
-                    </article>
+                <div id="homepage-blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Blog posts will be loaded dynamically from localStorage -->
                 </div>
 
                 <div class="text-center mt-12 fade-in">
@@ -1192,6 +1140,68 @@
                 }
             });
         });
+
+        // Load latest blog posts from localStorage
+        function loadHomepageBlogPosts() {
+            const blogs = JSON.parse(localStorage.getItem('blogs') || '[]');
+            const blogContainer = document.getElementById('homepage-blog-posts');
+
+            if (!blogContainer) return;
+
+            // Sort by date (latest first) and take first 3
+            const latestBlogs = blogs
+                .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+                .slice(0, 3);
+
+            if (latestBlogs.length === 0) {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'ar';
+                const emptyMessage = currentLang === 'ar'
+                    ? '<div class="col-span-full text-center py-12"><div class="neo-border bg-white p-8 inline-block"><p class="text-xl font-bold mb-4">لا توجد مقالات بعد</p><a href="admin.html" class="neo-button bg-pink-500 text-white px-6 py-3">إضافة مقال</a></div></div>'
+                    : '<div class="col-span-full text-center py-12"><div class="neo-border bg-white p-8 inline-block"><p class="text-xl font-bold mb-4">No blog posts yet</p><a href="admin.html" class="neo-button bg-pink-500 text-white px-6 py-3">Add Blog Post</a></div></div>';
+                blogContainer.innerHTML = emptyMessage;
+                return;
+            }
+
+            const colors = ['pink', 'cyan', 'yellow', 'green', 'purple', 'orange'];
+
+            blogContainer.innerHTML = latestBlogs.map((blog, index) => {
+                const color = colors[index % colors.length];
+                const bgClass = `bg-gradient-to-br from-${color}-500 to-${color}-600`;
+
+                return `
+                    <article class="blog-card neo-border bg-white hover:translate-y-[-8px] transition-transform duration-300">
+                        <div class="${bgClass} p-8 border-b-4 border-black">
+                            <div class="flex gap-2 mb-4">
+                                <span class="bg-black text-${color}-400 px-3 py-1 text-sm font-bold border-2 border-black">${blog.category || 'Economics'}</span>
+                            </div>
+                            <h3 class="text-3xl font-black mb-4 text-white lang-ar">${blog.titleAr || blog.title}</h3>
+                            <h3 class="text-3xl font-black mb-4 text-white lang-en lang-hidden">${blog.titleEn || blog.title}</h3>
+                        </div>
+                        <div class="p-8">
+                            <p class="text-lg mb-6 font-semibold lang-ar">${blog.excerptAr || blog.excerpt || ''}</p>
+                            <p class="text-lg mb-6 font-semibold lang-en lang-hidden">${blog.excerptEn || blog.excerpt || ''}</p>
+                            <a href="blog-post-1.html?id=${blog.id}" class="neo-button bg-${color}-500 text-white px-6 py-3 inline-block">
+                                <span class="lang-ar">اقرأ المزيد →</span>
+                                <span class="lang-en lang-hidden">READ MORE →</span>
+                            </a>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Fix VIEW ALL POSTS buttons
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('VIEW ALL POSTS') || button.textContent.includes('عرض جميع المقالات')) {
+                button.addEventListener('click', () => {
+                    window.location.href = 'blog.html';
+                });
+                button.style.cursor = 'pointer';
+            }
+        });
+
+        // Load blog posts on page load
+        loadHomepageBlogPosts();
     </script>
 </body>
 </html>
