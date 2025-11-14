@@ -22,35 +22,59 @@ const firebaseConfig = {
   appId: "1:123456789012:web:abcdef1234567890"
 };
 
-// Initialize Firebase
-try {
-  firebase.initializeApp(firebaseConfig);
-  console.log('✅ Firebase initialized successfully');
-} catch (error) {
-  console.error('❌ Firebase initialization error:', error);
-  alert('Firebase configuration error. Please check firebase-config.js');
+// Wait for Firebase SDK to load before initializing
+function initializeFirebaseApp() {
+  // Check if Firebase SDK is loaded
+  if (typeof firebase === 'undefined') {
+    console.error('❌ Firebase SDK not loaded! Check CDN links.');
+    setTimeout(initializeFirebaseApp, 100);
+    return;
+  }
+
+  try {
+    // Initialize Firebase
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(firebaseConfig);
+      console.log('✅ Firebase app initialized successfully');
+      console.log('📦 Project:', firebaseConfig.projectId);
+    } else {
+      console.log('✅ Firebase app already initialized');
+    }
+
+    // Initialize Firebase services
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    console.log('✅ Firebase services ready');
+
+    // Enable offline persistence for Firestore
+    db.enablePersistence()
+      .then(() => {
+        console.log('✅ Offline persistence enabled');
+      })
+      .catch((err) => {
+        if (err.code === 'failed-precondition') {
+          console.warn('⚠️ Multiple tabs open, persistence can only be enabled in one tab at a time.');
+        } else if (err.code === 'unimplemented') {
+          console.warn('⚠️ The current browser does not support persistence.');
+        }
+      });
+
+    // Export for use in other scripts
+    window.firebaseApp = {
+      auth,
+      db,
+      storage,
+      config: firebaseConfig
+    };
+
+    console.log('🚀 Firebase configuration complete!');
+  } catch (error) {
+    console.error('❌ Firebase initialization error:', error);
+    alert('⚠️ Firebase Configuration Error!\n\n' + error.message + '\n\nPlease check:\n1. Firebase credentials are correct\n2. Internet connection is active\n3. Browser console for details');
+  }
 }
 
-// Initialize Firebase services
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
-
-// Enable offline persistence
-db.enablePersistence()
-  .then(() => console.log('✅ Offline persistence enabled'))
-  .catch((err) => {
-    if (err.code === 'failed-precondition') {
-      console.warn('⚠️ Multiple tabs open, persistence can only be enabled in one tab at a time.');
-    } else if (err.code === 'unimplemented') {
-      console.warn('⚠️ The current browser does not support persistence.');
-    }
-  });
-
-// Export for use in other scripts
-window.firebaseApp = {
-  auth,
-  db,
-  storage,
-  config: firebaseConfig
-};
+// Start initialization
+initializeFirebaseApp();
