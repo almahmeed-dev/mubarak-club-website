@@ -1,91 +1,172 @@
 // Admin Panel JavaScript - Mubarak Club CMS
 
-// ==================== AUTHENTICATION ====================
+// ==================== FIREBASE AUTHENTICATION ====================
 
-// Default credentials (CHANGE THESE!)
-const DEFAULT_USERNAME = 'admin';
+// Default credentials (CHANGE THESE AFTER FIRST LOGIN!)
+const DEFAULT_EMAIL = 'admin@mubarakclub.com';
 const DEFAULT_PASSWORD = 'mubarak2024';
 
-// Check if user is logged in
-function checkAuth() {
-    const isLoggedIn = localStorage.getItem('adminLoggedIn');
-    const currentUser = localStorage.getItem('currentUser');
+// Wait for Firebase to be ready
+let firebaseReady = false;
 
-    if (isLoggedIn === 'true' && currentUser) {
-        showDashboard();
-        document.getElementById('current-user').textContent = currentUser;
-        loadAllData();
-    }
+// Check Firebase initialization
+function waitForFirebase() {
+    return new Promise((resolve) => {
+        if (window.firebaseApp && window.firebaseApp.auth) {
+            firebaseReady = true;
+            resolve();
+        } else {
+            setTimeout(() => waitForFirebase().then(resolve), 100);
+        }
+    });
 }
 
-// Login form handler
-document.getElementById('login-form').addEventListener('submit', function(e) {
+// Firebase Auth State Observer
+waitForFirebase().then(() => {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in
+            console.log('✅ User authenticated:', user.email);
+            showDashboard();
+            document.getElementById('current-user').textContent = user.email;
+            loadAllData();
+        } else {
+            // User is signed out
+            console.log('❌ User not authenticated');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+        }
+    });
+});
+
+// Login form handler with Firebase Auth
+document.getElementById('login-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const username = document.getElementById('username').value;
+    const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Get stored credentials or use defaults
-    const storedUsername = localStorage.getItem('adminUsername') || DEFAULT_USERNAME;
-    const storedPassword = localStorage.getItem('adminPassword') || DEFAULT_PASSWORD;
+    // Show loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Logging in...';
+    submitButton.disabled = true;
 
-    if (username === storedUsername && password === storedPassword) {
-        localStorage.setItem('adminLoggedIn', 'true');
-        localStorage.setItem('currentUser', username);
-        showDashboard();
-        loadAllData();
-    } else {
-        document.getElementById('login-error').classList.remove('hidden');
-        setTimeout(() => {
-            document.getElementById('login-error').classList.add('hidden');
-        }, 3000);
+    try {
+        // Try to sign in with Firebase
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        console.log('✅ Login successful');
+        // Dashboard will show automatically via auth state observer
+    } catch (error) {
+        console.error('Login error:', error.code);
+
+        // If user doesn't exist and using default credentials, create the account
+        if (error.code === 'auth/user-not-found' && email === DEFAULT_EMAIL && password === DEFAULT_PASSWORD) {
+            try {
+                console.log('Creating default admin account...');
+                await firebase.auth().createUserWithEmailAndPassword(DEFAULT_EMAIL, DEFAULT_PASSWORD);
+                alert('✅ Default admin account created! Please change your password in Settings.\n\nEmail: ' + DEFAULT_EMAIL);
+            } catch (createError) {
+                console.error('Account creation error:', createError);
+                showLoginError('Failed to create admin account: ' + createError.message);
+            }
+        } else if (error.code === 'auth/wrong-password') {
+            showLoginError('Incorrect password!');
+        } else if (error.code === 'auth/invalid-email') {
+            showLoginError('Invalid email address!');
+        } else if (error.code === 'auth/user-not-found') {
+            showLoginError('User not found! Use default credentials: ' + DEFAULT_EMAIL);
+        } else {
+            showLoginError('Login failed: ' + error.message);
+        }
+    } finally {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
     }
 });
+
+// Show login error
+function showLoginError(message) {
+    const errorDiv = document.getElementById('login-error');
+    errorDiv.textContent = message;
+    errorDiv.classList.remove('hidden');
+    setTimeout(() => {
+        errorDiv.classList.add('hidden');
+    }, 5000);
+}
 
 // Show dashboard
 function showDashboard() {
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('admin-dashboard').classList.remove('hidden');
-    document.getElementById('current-user').textContent = localStorage.getItem('currentUser');
 }
 
-// Logout
-function logout() {
+// Logout with Firebase
+async function logout() {
     if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('adminLoggedIn');
-        localStorage.removeItem('currentUser');
-        location.reload();
+        try {
+            await firebase.auth().signOut();
+            console.log('✅ Logout successful');
+            location.reload();
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Logout failed: ' + error.message);
+        }
     }
 }
 
-// Change password
-document.getElementById('change-password-form').addEventListener('submit', function(e) {
+// Change password with Firebase
+document.getElementById('change-password-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const current = document.getElementById('current-password').value;
     const newPass = document.getElementById('new-password').value;
     const confirm = document.getElementById('confirm-password').value;
 
-    const storedPassword = localStorage.getItem('adminPassword') || DEFAULT_PASSWORD;
-
-    if (current !== storedPassword) {
-        alert('Current password is incorrect!');
-        return;
-    }
-
     if (newPass !== confirm) {
-        alert('New passwords do not match!');
+        alert('❌ New passwords do not match!');
         return;
     }
 
     if (newPass.length < 8) {
-        alert('Password must be at least 8 characters!');
+        alert('❌ Password must be at least 8 characters!');
         return;
     }
 
-    localStorage.setItem('adminPassword', newPass);
-    alert('Password changed successfully!');
-    this.reset();
+    try {
+        const user = firebase.auth().currentUser;
+
+        if (!user) {
+            alert('❌ No user is currently logged in!');
+            return;
+        }
+
+        // Re-authenticate user with current password
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            current
+        );
+
+        await user.reauthenticateWithCredential(credential);
+        console.log('✅ Re-authentication successful');
+
+        // Update password
+        await user.updatePassword(newPass);
+        console.log('✅ Password updated successfully');
+
+        alert('✅ Password changed successfully in Firebase!');
+        this.reset();
+    } catch (error) {
+        console.error('Password change error:', error);
+
+        if (error.code === 'auth/wrong-password') {
+            alert('❌ Current password is incorrect!');
+        } else if (error.code === 'auth/weak-password') {
+            alert('❌ New password is too weak!');
+        } else {
+            alert('❌ Password change failed: ' + error.message);
+        }
+    }
 });
 
 // ==================== DATA MANAGEMENT ====================
@@ -512,8 +593,9 @@ function exportData() {
 
 // ==================== INITIALIZATION ====================
 
-// Check authentication on page load
-checkAuth();
+// Firebase auth state observer handles authentication automatically
+// Data structures initialized in loadAllData() called by auth observer
 
-// Initialize data structures
-initializeData();
+console.log('🚀 Mubarak Club Admin Panel loaded');
+console.log('📧 Default login: admin@mubarakclub.com / mubarak2024');
+console.log('⚠️ Please change your password after first login!');
