@@ -458,7 +458,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
-    <!-- Wait for Firebase SDK to load -->
+    <!-- Firebase Configuration - Embedded directly for reliability -->
     <script>
         console.log('🔍 Checking Firebase SDK after CDN load...');
         if (typeof firebase === 'undefined') {
@@ -467,11 +467,70 @@
         } else {
             console.log('✅ Firebase SDK loaded successfully from CDN');
             console.log('📦 Firebase version:', firebase.SDK_VERSION);
+
+            // Initialize Firebase directly (no external file dependency)
+            console.log('🔧 Initializing Firebase...');
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyBQ_dndLYLiUcxeGJQdprC28GyK43ZsmWI",
+                authDomain: "mubarak-club.firebaseapp.com",
+                projectId: "mubarak-club",
+                storageBucket: "mubarak-club.firebasestorage.app",
+                messagingSenderId: "744079624237",
+                appId: "1:744079624237:web:d73b31c8a03651d5e390a4",
+                measurementId: "G-XG8CC5TDSB"
+            };
+
+            try {
+                // Initialize Firebase
+                if (firebase.apps.length === 0) {
+                    firebase.initializeApp(firebaseConfig);
+                    console.log('✅ Firebase app initialized successfully');
+                    console.log('📦 Project:', firebaseConfig.projectId);
+                } else {
+                    console.log('⚠️ Firebase app already initialized');
+                }
+
+                // Initialize Firebase services
+                const auth = firebase.auth();
+                const db = firebase.firestore();
+                const storage = firebase.storage();
+
+                console.log('✅ Firebase services ready');
+
+                // Enable offline persistence
+                db.enablePersistence()
+                    .then(() => console.log('✅ Offline persistence enabled'))
+                    .catch((err) => {
+                        if (err.code === 'failed-precondition') {
+                            console.warn('⚠️ Multiple tabs open');
+                        } else if (err.code === 'unimplemented') {
+                            console.warn('⚠️ Browser does not support persistence');
+                        }
+                    });
+
+                // Export for use in other scripts
+                window.firebaseApp = {
+                    auth,
+                    db,
+                    storage,
+                    config: firebaseConfig,
+                    initialized: true
+                };
+
+                console.log('🚀 Firebase configuration complete!');
+                console.log('🔥 Firebase apps count:', firebase.apps.length);
+            } catch (error) {
+                console.error('❌ Firebase initialization error:', error);
+                alert('⚠️ Firebase Configuration Error!\n\n' + error.message);
+
+                window.firebaseApp = {
+                    initialized: false,
+                    error: error.message
+                };
+            }
         }
     </script>
-
-    <!-- Firebase Configuration -->
-    <script src="firebase-config.js"></script>
 
     <!-- Admin Panel Script -->
     <script src="admin.js"></script>
