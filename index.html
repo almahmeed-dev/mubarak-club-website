@@ -911,19 +911,6 @@
             }, 50);
         }
 
-        // Load saved language preference - default to Arabic
-        const savedLang = localStorage.getItem('preferred-language');
-
-        // Only switch if explicitly saved as 'en', otherwise default to Arabic
-        if (savedLang === 'en') {
-            switchLanguage('en');
-        } else {
-            // Ensure Arabic is the default
-            localStorage.setItem('preferred-language', 'ar');
-            // Make sure Arabic is showing (in case HTML loaded with wrong state)
-            switchLanguage('ar');
-        }
-
         // Intersection Observer for Scroll Animations
         const observerOptions = {
             threshold: 0.1,
@@ -1150,6 +1137,46 @@
         // Load content on page load
         loadHomepageBlogPosts();
         loadHomepageVideos();
+
+        // Load saved language preference - default to Arabic
+        const savedLang = localStorage.getItem('preferred-language');
+
+        // Only switch if explicitly saved as 'en', otherwise default to Arabic
+        if (savedLang === 'en') {
+            switchLanguage('en');
+        } else {
+            // Ensure Arabic is the default
+            localStorage.setItem('preferred-language', 'ar');
+            // Make sure Arabic is showing
+            switchLanguage('ar');
+        }
+
+        // Listen for storage changes (when admin panel updates data)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'blogs' || e.key === 'videos') {
+                loadHomepageBlogPosts();
+                loadHomepageVideos();
+                // Reapply language visibility
+                switchLanguage(currentLang);
+            }
+        });
+
+        // Periodically check for updates (for same-tab updates)
+        let lastBlogData = localStorage.getItem('blogs');
+        let lastVideoData = localStorage.getItem('videos');
+        setInterval(() => {
+            const currentBlogData = localStorage.getItem('blogs');
+            const currentVideoData = localStorage.getItem('videos');
+
+            if (currentBlogData !== lastBlogData || currentVideoData !== lastVideoData) {
+                lastBlogData = currentBlogData;
+                lastVideoData = currentVideoData;
+                loadHomepageBlogPosts();
+                loadHomepageVideos();
+                // Reapply language visibility
+                switchLanguage(currentLang);
+            }
+        }, 2000); // Check every 2 seconds
     </script>
 </body>
 </html>

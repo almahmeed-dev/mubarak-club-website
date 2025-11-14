@@ -597,19 +597,6 @@
             localStorage.setItem('preferred-language', lang);
         }
 
-        // Load saved language preference - default to Arabic
-        const savedLang = localStorage.getItem('preferred-language');
-
-        // Only switch if explicitly saved as 'en', otherwise default to Arabic
-        if (savedLang === 'en') {
-            switchLanguage('en');
-        } else {
-            // Ensure Arabic is the default
-            localStorage.setItem('preferred-language', 'ar');
-            // Make sure Arabic is showing
-            switchLanguage('ar');
-        }
-
         // Load videos from localStorage (from admin panel)
         function loadVideosFromStorage() {
             const videos = JSON.parse(localStorage.getItem('videos') || '[]');
@@ -681,6 +668,40 @@
 
         // Load videos on page load
         loadVideosFromStorage();
+
+        // Load saved language preference - default to Arabic
+        const savedLang = localStorage.getItem('preferred-language');
+
+        // Only switch if explicitly saved as 'en', otherwise default to Arabic
+        if (savedLang === 'en') {
+            switchLanguage('en');
+        } else {
+            // Ensure Arabic is the default
+            localStorage.setItem('preferred-language', 'ar');
+            // Make sure Arabic is showing
+            switchLanguage('ar');
+        }
+
+        // Listen for storage changes (when admin panel updates data)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'videos') {
+                loadVideosFromStorage();
+                // Reapply language visibility
+                switchLanguage(currentLang);
+            }
+        });
+
+        // Periodically check for updates (for same-tab updates)
+        let lastVideoData = localStorage.getItem('videos');
+        setInterval(() => {
+            const currentVideoData = localStorage.getItem('videos');
+            if (currentVideoData !== lastVideoData) {
+                lastVideoData = currentVideoData;
+                loadVideosFromStorage();
+                // Reapply language visibility
+                switchLanguage(currentLang);
+            }
+        }, 2000); // Check every 2 seconds
 
         // Video Filter Functionality
         function filterVideos(category) {
