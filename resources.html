@@ -195,7 +195,7 @@
                 <span class="lang-en lang-hidden bg-cyan-300 px-6 py-3 border-4 border-black inline-block">📝 Study Guides</span>
             </h2>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="resources-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Guide 1 -->
                 <div class="resource-card neo-border bg-white">
                     <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-6 border-b-4 border-black">
@@ -474,6 +474,70 @@
         if (savedLang && savedLang !== 'ar') {
             switchLanguage(savedLang);
         }
+
+        // Load resources from localStorage (from admin panel)
+        function loadResourcesFromStorage() {
+            const resources = JSON.parse(localStorage.getItem('resources') || '[]');
+            const resourcesGrid = document.getElementById('resources-grid');
+
+            if (resources.length === 0) {
+                resourcesGrid.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <div class="text-8xl mb-4">📚</div>
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="lang-ar">لا توجد موارد بعد</span>
+                            <span class="lang-en lang-hidden">No Resources Yet</span>
+                        </h3>
+                        <p class="text-gray-600 mb-6">
+                            <span class="lang-ar">استخدم لوحة الإدارة لإضافة موارد تعليمية جديدة</span>
+                            <span class="lang-en lang-hidden">Use the admin panel to add new educational resources</span>
+                        </p>
+                        <a href="admin.html" class="neo-button bg-cyan-500 text-white px-8 py-3 font-bold inline-block">
+                            <span class="lang-ar">← انتقل إلى لوحة الإدارة</span>
+                            <span class="lang-en lang-hidden">GO TO ADMIN PANEL →</span>
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            resourcesGrid.innerHTML = resources.map(resource => {
+                const colors = ['pink', 'cyan', 'green', 'purple', 'orange', 'blue', 'red', 'yellow'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const typeIcons = {
+                    'guide': '📝',
+                    'test': '✅',
+                    'flashcard': '🗂️',
+                    'worksheet': '📋'
+                };
+                const icon = typeIcons[resource.type] || '📚';
+
+                return `
+                    <div class="resource-card neo-border bg-white">
+                        <div class="bg-gradient-to-br from-${color}-500 to-${color}-600 p-6 border-b-4 border-black">
+                            <div class="text-6xl mb-4">${icon}</div>
+                            <h3 class="lang-ar text-2xl font-bold text-white">${resource.titleAr}</h3>
+                            <h3 class="lang-en lang-hidden text-2xl font-bold text-white">${resource.titleEn}</h3>
+                        </div>
+                        <div class="p-6">
+                            <p class="lang-ar font-semibold mb-4">${resource.descAr}</p>
+                            <p class="lang-en lang-hidden font-semibold mb-4">${resource.descEn}</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="bg-yellow-300 px-3 py-1 text-sm font-bold border-2 border-black">${resource.format || 'PDF'}</span>
+                                <span class="bg-${color}-300 px-3 py-1 text-sm font-bold border-2 border-black">${resource.size || 'N/A'}</span>
+                            </div>
+                            <a href="${resource.url}" target="_blank" class="neo-button bg-${color}-400 px-6 py-3 font-bold w-full block text-center">
+                                <span class="lang-ar">تحميل 📥</span>
+                                <span class="lang-en lang-hidden">Download 📥</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load resources on page load
+        loadResourcesFromStorage();
     </script>
 </body>
 </html>

@@ -602,6 +602,78 @@
             switchLanguage(savedLang);
         }
 
+        // Load videos from localStorage (from admin panel)
+        function loadVideosFromStorage() {
+            const videos = JSON.parse(localStorage.getItem('videos') || '[]');
+
+            // Group videos by category
+            const videosByCategory = {
+                'microeconomics': [],
+                'macroeconomics': [],
+                'finance': [],
+                'trade': []
+            };
+
+            videos.forEach(video => {
+                const cat = video.category || 'microeconomics';
+                if (videosByCategory[cat]) {
+                    videosByCategory[cat].push(video);
+                }
+            });
+
+            // Update each section
+            Object.keys(videosByCategory).forEach(category => {
+                const section = document.querySelector(`.video-section[data-category="${category}"]`);
+                if (!section) return;
+
+                const videoGrid = section.querySelector('.grid');
+                if (!videoGrid) return;
+
+                const categoryVideos = videosByCategory[category];
+
+                if (categoryVideos.length === 0) {
+                    videoGrid.innerHTML = `
+                        <div class="col-span-full text-center py-8">
+                            <p class="text-gray-600 font-semibold">
+                                <span class="lang-ar">لا توجد فيديوهات في هذه الفئة بعد</span>
+                                <span class="lang-en lang-hidden">No videos in this category yet</span>
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                videoGrid.innerHTML = categoryVideos.map(video => {
+                    const colors = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'pink'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+
+                    return `
+                        <div class="neo-border bg-white hover-lift">
+                            <div class="bg-${color}-500 p-4 border-b-4 border-black">
+                                <h3 class="lang-ar text-xl font-bold text-white">${video.titleAr}</h3>
+                                <h3 class="lang-en lang-hidden text-xl font-bold text-white">${video.titleEn}</h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="video-wrapper neo-border bg-gray-200 mb-4">
+                                    <iframe src="https://www.youtube.com/embed/${video.youtubeId}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <p class="lang-ar font-semibold mb-3">${video.descAr}</p>
+                                <p class="lang-en lang-hidden font-semibold mb-3">${video.descEn}</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    ${video.tags ? video.tags.split(',').map(tag =>
+                                        `<span class="bg-${color}-300 px-3 py-1 text-sm font-bold border-2 border-black">${tag.trim()}</span>`
+                                    ).join('') : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        // Load videos on page load
+        loadVideosFromStorage();
+
         // Video Filter Functionality
         function filterVideos(category) {
             const sections = document.querySelectorAll('.video-section');

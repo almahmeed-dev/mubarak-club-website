@@ -540,6 +540,87 @@
             switchLanguage(savedLang);
         }
 
+        // Load blogs from localStorage (from admin panel)
+        function loadBlogsFromStorage() {
+            const blogs = JSON.parse(localStorage.getItem('blogs') || '[]');
+            const blogGrid = document.getElementById('blog-grid');
+
+            if (blogs.length === 0) {
+                blogGrid.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <div class="text-8xl mb-4">📝</div>
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="lang-ar">لا توجد مقالات بعد</span>
+                            <span class="lang-en lang-hidden">No Blog Posts Yet</span>
+                        </h3>
+                        <p class="text-gray-600 mb-6">
+                            <span class="lang-ar">استخدم لوحة الإدارة لإضافة مقالات جديدة</span>
+                            <span class="lang-en lang-hidden">Use the admin panel to add new blog posts</span>
+                        </p>
+                        <a href="admin.html" class="neo-button bg-pink-500 text-white px-8 py-3 font-bold inline-block">
+                            <span class="lang-ar">← انتقل إلى لوحة الإدارة</span>
+                            <span class="lang-en lang-hidden">GO TO ADMIN PANEL →</span>
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            blogGrid.innerHTML = blogs.map(blog => {
+                const colors = ['pink', 'cyan', 'yellow', 'green', 'purple', 'orange'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const categoryMap = {
+                    'study-tips': 'نصائح_دراسية',
+                    'bahrain': 'البحرين',
+                    'concepts': 'مفاهيم',
+                    'environment': 'البيئة',
+                    'career': 'مهنة'
+                };
+                const tags = blog.tags ? blog.tags.split(',').map(t => `#${t.trim()}`).join(' ') : '';
+
+                return `
+                    <article class="blog-card neo-border bg-white cursor-pointer h-full" data-category="${blog.category}">
+                        <div class="bg-gradient-to-br from-${color}-500 to-${color}-600 p-8 border-b-4 border-black">
+                            <div class="text-6xl mb-4">📝</div>
+                            <span class="lang-ar bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">${formatDateAr(blog.date)}</span>
+                            <span class="lang-en lang-hidden bg-white px-3 py-1 text-xs font-bold border-2 border-black inline-block">${formatDateEn(blog.date)}</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="lang-ar text-2xl font-bold mb-3">${blog.titleAr}</h3>
+                            <h3 class="lang-en lang-hidden text-2xl font-bold mb-3">${blog.titleEn}</h3>
+
+                            <p class="lang-ar mb-4 text-gray-700">${blog.excerptAr}</p>
+                            <p class="lang-en lang-hidden mb-4 text-gray-700">${blog.excerptEn}</p>
+
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                ${tags.split(' ').map(tag =>
+                                    `<span class="bg-${color}-300 px-3 py-1 text-xs font-bold border-2 border-black">${tag}</span>`
+                                ).join('')}
+                            </div>
+                            <a href="blog-post-1.html?id=${blog.id}" class="neo-button bg-${color}-400 px-6 py-2 font-bold text-sm w-full block text-center">
+                                <span class="lang-ar">اقرأ المزيد ←</span>
+                                <span class="lang-en lang-hidden">READ MORE →</span>
+                            </a>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Format date helpers
+        function formatDateAr(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function formatDateEn(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Load blogs on page load
+        loadBlogsFromStorage();
+
         // Filter Functionality
         let currentFilter = 'all';
 
