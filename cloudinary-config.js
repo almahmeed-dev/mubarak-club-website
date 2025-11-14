@@ -15,9 +15,9 @@
 // ================================
 
 const cloudinaryConfig = {
-  cloudName: 'YOUR_CLOUD_NAME',  // From Cloudinary Dashboard
+  cloudName: 'da2zdaxlv',  // From Cloudinary Dashboard
   uploadPreset: 'mubarak_club_uploads',  // Your unsigned upload preset
-  apiKey: 'YOUR_API_KEY',  // Optional: from Dashboard
+  apiKey: '981172351697479',  // Optional: from Dashboard
   folder: 'mubarak-club'  // Folder to organize uploads
 };
 
